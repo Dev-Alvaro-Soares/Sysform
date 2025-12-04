@@ -1,17 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Form MPPA</title>
+    <!-- Integração do CSS personalizado -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <!-- Integração do Bootstrap -->
+    <link rel="stylesheet" href="../../public/css/estilos.css">
 </head>
+
 <body>
+
     <!-- Cabeçalho -->
     <header>
-        <h1>Cadastro de veículo</h1>
-        <!-- Debugar as imagens - Não estão carregando -->
-        <img src="../../public/img/logoMppaBranco.png" alt="Logo do MPPA">
-        <img src="../../public/img/logoGsiMppa.png" alt="Logo do GSI">
+        <div class="header_container d-flex align-items-center justify-content-between">
+            <h1 class="titulo-header">Cadastro de veículo</h1>
+            <div class="d-flex align-items-center gap-4">
+                <img class="logo-mppa" src="../../public/img/logoMppaBranco.png" alt="Logo do MPPA">
+                <img class="logo-gsi" src="../../public/img/logoGsiMppa.png" alt="Logo do GSI">
+            </div>
+        </div>
     </header>
     <main>
         <form action="">
@@ -39,5 +50,9 @@
             <button>Enviar</button>
         </form>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
