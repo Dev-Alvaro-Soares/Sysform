@@ -49,11 +49,13 @@ table {
 :root{
     /* Cores */
     --cor-primaria: #1e325c;
-    --cor-secundaria: #CCCCCC;
+    --cor-secundaria: #f2f2f2;
     --cor-titulo: #FFFFFF;
     --cor-label: #000000;
     --cor-texto: #333333; 
-    --cor-fundo: #f2f2f2;
+    --cor-fundo: #FFFFFF;
+    --cor-botão-bg: #007BFF;
+    --cor-botão-texto: #FFFFFF;
     /* Fontes - Escolher uma fonte para formulário e o seu peso */
     --fonte-principal: ;
     --fonte-titulo-tamanho: 36px;
@@ -94,5 +96,56 @@ h2{
     height: 70px;
     width: auto;
     flex-shrink: 0;
+}
+
+/* Dados do condutor */
+
+.section-box {
+    background-color: #f2f2f2;  /* Alterar a cor de fundo para variável cor secundária no figma */
+    border: 1px solid #CCCCCC;  /* Alterar a cor da borda para cinza do figma */
+    border-radius: 4px;
+}
+
+/* Ajuste visual do título de seção */
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* Mantém o comportamento responsivo perfeito */
+.flex-item {
+    flex: 1;
+    min-width: 220px;
+}
+
+.input-line:focus {
+    outline: none;
+    box-shadow: none;
+    border-bottom: 2px solid #007BFF;
+}
+
+/* Observações */
+
+textarea {
+    width: 100%;
+    height: 180px;  
+    border: none;
+    resize: none;
+}
+
+textarea:focus {
+    outline: none;
+    box-shadow: none;
+    border: none;
+}
+
+/* botão de envio */
+
+button {
+    width: 400px;
+    height: 70px;
+    color: var(--cor-botão-texto);
+    background-color: var(--cor-botão-bg);
+    border: none;
 }
 
