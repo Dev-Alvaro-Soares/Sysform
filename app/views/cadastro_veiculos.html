@@ -4,20 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form MPPA</title>
+    <title>Formulário MPPA / GSI</title>
+    <link rel="shortcut icon" href="../../public/img/faviconMPPA.png" type="image/x-icon">
     <!-- Integração do CSS personalizado -->
+    <link rel="stylesheet" href="../../public/css/estilos.css">
+    <!-- Integração do Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <!-- Integração do Bootstrap -->
-    <link rel="stylesheet" href="../../public/css/estilos.css">
+    <!-- Integração dos ícones do bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 
 <body>
-
     <!-- Cabeçalho -->
     <header>
         <div class="header_container d-flex align-items-center justify-content-between">
-            <h1 class="titulo-header">Cadastro de veículo</h1>
+            <h1 class="titulo-header">Solicitação de veículo</h1>
             <div class="d-flex align-items-center gap-4">
                 <img class="logo-mppa" src="../../public/img/logoMppaBranco.png" alt="Logo do MPPA">
                 <img class="logo-gsi" src="../../public/img/logoGsiMppa.png" alt="Logo do GSI">
@@ -26,40 +28,74 @@
     </header>
     <main>
         <form action="">
+
             <!-- 1. Dados do condutor -->
             <section class="section-box p-3 mx-4 my-3">
                 <h2 class="section-title mb-3">1. Dados do condutor</h2>
+
                 <div class="d-flex flex-wrap gap-4">
                     <input class="form-control input-line flex-item" type="text" placeholder="Nome">
                     <input class="form-control input-line flex-item" type="text" placeholder="Matrícula">
-                    <input class="form-control input-line flex-item" type="date" placeholder="Data da missão (dd.mm.aaaa)"> <!-- Colocar o texto Data da missão (dd.mm.aaaa) -->
+
+                    <!-- Campo Data da missão (agora tipo texto + ícone interno) -->
+                    <div class="input-wrapper flex-item">
+                        <input type="text" class="form-control input-line campo-data"
+                            placeholder="Data da missão (dd.mm.aaaa)">
+                        <i class="bi bi-calendar-date-fill icone-data"></i>
+                    </div>
                 </div>
             </section>
 
             <!-- 2. Dados do veículo -->
             <section class="section-box p-3 mx-4 my-3">
                 <h2 class="section-title mb-3">2. Dados do veículo</h2>
-
-                <div class="d-flex flex-wrap gap-4">
-                    <select class="form-control input-line flex-item" name="" id="">
-                        <!-- Colocar um valor padrão - "Selecione um veículo" -->
-
-                    </select>
-                    <input class="form-control input-line flex-item" type="number" placeholder="Kilometragem inicial">
-                    <input class="form-control input-line flex-item" type="number" placeholder="Kilometragem final">
-                    <input class="form-control input-line flex-item" type="time" placeholder="Horário da retirada">     <!-- Colocar o texto horário da retirada dentro do campo -->
-                    <input class="form-control input-line flex-item" type="time" placeholder="Horário da devolução">    <!-- Colocar o texto horário da davolução dentro do campo -->
+                <div class="row g-4">
+                    <div class="col-4">
+                        <div class="input-wrapper">
+                            <select class="form-control campo-select">
+                                <option selected disabled>Escolha o modelo</option>
+                                <option>VOLKSWAGEM VIRTUS 1.0 PRETO - SZA9E20</option>
+                                <option>VOLKSWAGEM VIRTUS 1.0 PRETO - SZA9I20</option>
+                                <option>CHEVROLET S10 BRANCA - SIC5E83</option>
+                                <option>CHEVROLET S10 PRETO - SIH0G81</option>
+                                <option>CHEVROLET S10 PRETO - SIP3G83</option>
+                                <option>HONDA/ XRE 300 - QDT6112</option>
+                            </select>
+                            <i class="bi bi-caret-down-fill icone-select"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control input-line" type="number" placeholder="Quilometragem inicial">
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control input-line" type="number" placeholder="Quilometragem final">
+                    </div>
+                    <div class="col-md-2">
+                        <div class="input-wrapper">
+                            <input type="text" class="form-control campo-horario"
+                                placeholder="Horário de retirada (hh:mm)">
+                            <i class="bi bi-clock-fill icone-horario"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="input-wrapper">
+                            <input type="text" class="form-control campo-horario"
+                                placeholder="Horário de devolução (hh:mm)">
+                            <i class="bi bi-clock-fill icone-horario"></i>
+                        </div>
+                    </div>
                 </div>
             </section>
 
             <!-- 3. Campo de observações -->
             <section class="section-box p-3 mx-4 my-3">
                 <h2 class="section-title mb-3">3. Observações</h2>
-                <textarea name="" id=""></textarea>
+                <textarea class="form-control input-line" name="" id=""></textarea>
             </section>
 
             <!-- 4. Botão de envio -->
-            <button class="d-block mx-auto text-uppercase my-5">Enviar</button>
+            <button class="btn-enviar d-block mx-auto text-uppercase my-5 fw-bold"><i
+                    class="bi bi-cursor-fill me-2"></i>Enviar</button>
         </form>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
@@ -76,9 +112,7 @@
 
 Comentários no código (Ajustes)
 
--> No campo de data: Identificar com um placeholder "Data da missão (dd.mm.aaaa)", no código apenas está o formato padrão do HTML5 que fica confuso.
--> No campo modelo: Deixar uma mensagem padrão - "Selecione um veículo" e o simbolo de seta para baixo. Quando tiver selecionado, abrir uma caixa com os veículos disponíveis
--> Nos campos dos horários de retirada e devolução: Colocar o texto dentro do campo, como placeholder, "Horário da retirada" e "Horário da devolução"
--> No botão enviar colocar um icon de envio ao lado dele na cor branca.
+-> Ao reduzir o tamanho da tela, notei que todos os campos estão mantendo uma consistência de estender para ocupar o espaço dispónivel, porém apenas o campo select (modelo) não está se comportando da mesma forma. Sugiro ajustar o CSS para que ele também se comporte como os outros campos, ocupando o espaço disponível de forma proporcional.
+-> Ao reduzir o espaço horizontal, notei que o layout dos campos está se quebrando o placeholder vai sumindo ao inves de apenas se reduzir proporcionalmente. Sugiro ajustar o CSS para que os campos mantenham uma largura mínima, evitando que o texto do placeholder desapareça.
 
 -->

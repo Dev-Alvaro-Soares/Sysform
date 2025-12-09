@@ -44,6 +44,7 @@ table {
 	border-spacing: 0;
 }
 
+
 /* Configuração gerais (Variáveis) */
 
 :root{
@@ -54,6 +55,7 @@ table {
     --cor-label: #000000;
     --cor-texto: #333333; 
     --cor-fundo: #FFFFFF;
+    --cor-borda-input: #CCCCCC;
     --cor-botão-bg: #007BFF;
     --cor-botão-texto: #FFFFFF;
     /* Fontes - Escolher uma fonte para formulário e o seu peso */
@@ -65,27 +67,33 @@ table {
     --espacamento-padrao-vertical: 50px;
 }
 
+
 /* Cabeçalho */ 
 
+/* Definição de uma cor de fundo */
 body {
     background-color: var(--cor-fundo);
 }
 
+/* Estilização do cabeçalho */ 
 div.header_container {
     background-color: var(--cor-primaria);
     height: 160px;
     padding: var(--espacamento-padrao-horizontal);
 }
 
+/* Estilização do título no cabeçalho */
 div.header_container > h1 {
     color: var(--cor-titulo);
     font-size: var(--fonte-titulo-tamanho);
 }
 
+/* Estilização dos subtítulos */
 h2{
     color: var(--cor-label);
 }
 
+/* Logos no cabeçalho */
 .logo-mppa {
     width: auto;
     height: 60px;
@@ -98,12 +106,15 @@ h2{
     flex-shrink: 0;
 }
 
-/* Dados do condutor */
 
+/* Configuração do corpo do formulário */
+
+/* Configuração do corpo das seções do formulário */
 .section-box {
-    background-color: #f2f2f2;  /* Alterar a cor de fundo para variável cor secundária no figma */
-    border: 1px solid #CCCCCC;  /* Alterar a cor da borda para cinza do figma */
+    background-color: var(--cor-secundaria);  
+    border: 1px solid var(--cor-borda-input);  
     border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
 /* Ajuste visual do título de seção */
@@ -118,34 +129,147 @@ h2{
     min-width: 220px;
 }
 
+/* Destacar o campo quando selecionado */
 .input-line:focus {
     outline: none;
     box-shadow: none;
     border-bottom: 2px solid #007BFF;
 }
 
+/* Mantém as setas do campo de quilometragem ativas */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    opacity: 1;
+    display: block;
+}
+
+/* Configuração do layout dos campos de dados do condutor */
+
+
+/* Wrapper para ícone dentro do input */
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* cria espaço para o ícone à direita */
+.campo-data {
+    padding-right: 2.3rem;
+}
+
+/* ícone dentro do campo */
+.icone-data {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 1.1rem;
+    color: #6c757d;
+}
+
+
+/* Configuração do layout dos campos de dados do veículo */
+
+/* Wrapper para posicionamento do ícone de seta no campo de modelo de veículos */
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* Ícone dentro do select (lado direito) */
+.icone-select {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; /* evita interferir no clique */
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Remove a seta padrão do select para usar a customizada */
+.campo-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 40px; /* espaço para o ícone */
+}
+
+/* Configuração do layout dos campos de horários */
+.horarios-container .input-wrapper {
+    position: relative;
+    flex: 1; 
+    min-width: 180px; 
+}
+
+/* Ícone dentro do campo */
+.icone-horario {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #555;
+}
+
+.dados-veiculo-container .flex-item {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* Wrapper dos horários */
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* Ícone dentro do campo */
+.icone-horario {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #555;
+}
+
 /* Observações */
 
-textarea {
+/* Configurações gerais para a área de observações */ 
+textarea.input-line {
     width: 100%;
     height: 180px;  
     border: none;
     resize: none;
 }
 
+/* Desativa efeitos ao focar na caixa de texto */
 textarea:focus {
     outline: none;
     box-shadow: none;
     border: none;
 }
 
+
 /* botão de envio */
 
-button {
-    width: 400px;
+/* Estilização do botão de envio */
+.btn-enviar {
+    width: 250px;
     height: 70px;
     color: var(--cor-botão-texto);
     background-color: var(--cor-botão-bg);
     border: none;
+    border-radius: 12px;
 }
+
+/* Efeito hover no botão de envio */
+button:hover {
+    background-color: var(--cor-primaria);
+    cursor: pointer;
+}
+
+
+
 
