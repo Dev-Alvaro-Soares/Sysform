@@ -1,59 +1,146 @@
 /* Reset CSS - meyerweb.com */
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
 }
+
 body {
-	line-height: 1;
+    line-height: 1;
 }
-ol, ul {
-	list-style: none;
+
+ol,
+ul {
+    list-style: none;
 }
-blockquote, q {
-	quotes: none;
+
+blockquote,
+q {
+    quotes: none;
 }
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: '';
+    content: none;
 }
+
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 
 
 /* Configuração gerais (Variáveis) */
 
-:root{
+:root {
     /* Cores */
     --cor-primaria: #1e325c;
     --cor-secundaria: #f2f2f2;
     --cor-titulo: #FFFFFF;
     --cor-label: #000000;
-    --cor-texto: #333333; 
+    --cor-texto: #333333;
     --cor-fundo: #FFFFFF;
     --cor-borda-input: #CCCCCC;
     --cor-botão-bg: #007BFF;
@@ -68,14 +155,14 @@ table {
 }
 
 
-/* Cabeçalho */ 
+/* Cabeçalho */
 
 /* Definição de uma cor de fundo */
 body {
     background-color: var(--cor-fundo);
 }
 
-/* Estilização do cabeçalho */ 
+/* Estilização do cabeçalho */
 div.header_container {
     background-color: var(--cor-primaria);
     height: 160px;
@@ -83,13 +170,13 @@ div.header_container {
 }
 
 /* Estilização do título no cabeçalho */
-div.header_container > h1 {
+div.header_container>h1 {
     color: var(--cor-titulo);
     font-size: var(--fonte-titulo-tamanho);
 }
 
 /* Estilização dos subtítulos */
-h2{
+h2 {
     color: var(--cor-label);
 }
 
@@ -111,10 +198,10 @@ h2{
 
 /* Configuração do corpo das seções do formulário */
 .section-box {
-    background-color: var(--cor-secundaria);  
-    border: 1px solid var(--cor-borda-input);  
+    background-color: var(--cor-secundaria);
+    border: 1px solid var(--cor-borda-input);
     border-radius: 4px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Ajuste visual do título de seção */
@@ -183,7 +270,8 @@ input[type="number"]::-webkit-outer-spin-button {
     right: 12px;
     top: 50%;
     transform: translateY(-50%);
-    pointer-events: none; /* evita interferir no clique */
+    pointer-events: none;
+    /* evita interferir no clique */
     font-size: 1rem;
     color: #555;
 }
@@ -193,14 +281,15 @@ input[type="number"]::-webkit-outer-spin-button {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    padding-right: 40px; /* espaço para o ícone */
+    padding-right: 40px;
+    /* espaço para o ícone */
 }
 
 /* Configuração do layout dos campos de horários */
 .horarios-container .input-wrapper {
     position: relative;
-    flex: 1; 
-    min-width: 180px; 
+    flex: 1;
+    min-width: 180px;
 }
 
 /* Ícone dentro do campo */
@@ -224,22 +313,34 @@ input[type="number"]::-webkit-outer-spin-button {
     width: 100%;
 }
 
-/* Ícone dentro do campo */
-.icone-horario {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-    color: #555;
+/* Esconde ícones que não sejam aquele do select em telas menores que a tela de um computador */
+@media (max-width: 1400px) and (min-width: 769px) {
+    input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button {
+        display: none !important;
+    }
+
+    i:not(.select-icon):not(.bi-cursor-fill) {
+        display: none !important;
+    }
+}
+
+/* Apresenta todos os ícones novamento para telas de tamanho medio como de um tablet */
+@media (max-width: 768px) {
+    input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button {
+        display: block !important;
+    }
+
+    i {
+        display: block;
+    }
 }
 
 /* Observações */
 
-/* Configurações gerais para a área de observações */ 
+/* Configurações gerais para a área de observações */
 textarea.input-line {
     width: 100%;
-    height: 180px;  
+    height: 180px;
     border: none;
     resize: none;
 }
@@ -270,6 +371,15 @@ button:hover {
     cursor: pointer;
 }
 
+/* Mantem o padrão visual do botão em todas as telas */
+.btn-enviar {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+}
 
-
-
+.btn-enviar i {
+    display: inline-block !important;
+}

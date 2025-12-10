@@ -36,8 +36,6 @@
                 <div class="d-flex flex-wrap gap-4">
                     <input class="form-control input-line flex-item" type="text" placeholder="Nome">
                     <input class="form-control input-line flex-item" type="text" placeholder="Matrícula">
-
-                    <!-- Campo Data da missão (agora tipo texto + ícone interno) -->
                     <div class="input-wrapper flex-item">
                         <input type="text" class="form-control input-line campo-data"
                             placeholder="Data da missão (dd.mm.aaaa)">
@@ -50,20 +48,22 @@
             <section class="section-box p-3 mx-4 my-3">
                 <h2 class="section-title mb-3">2. Dados do veículo</h2>
                 <div class="row g-4">
-                    <div class="col-4">
+
+                    <div class="col-12 col-md-4 mb-3">
                         <div class="input-wrapper">
-                            <select class="form-control campo-select">
-                                <option selected disabled>Escolha o modelo</option>
-                                <option>VOLKSWAGEM VIRTUS 1.0 PRETO - SZA9E20</option>
-                                <option>VOLKSWAGEM VIRTUS 1.0 PRETO - SZA9I20</option>
-                                <option>CHEVROLET S10 BRANCA - SIC5E83</option>
-                                <option>CHEVROLET S10 PRETO - SIH0G81</option>
-                                <option>CHEVROLET S10 PRETO - SIP3G83</option>
-                                <option>HONDA/ XRE 300 - QDT6112</option>
+                            <select class="form-select custom-input">
+                                <option value="" selected disabled>Escolha o modelo</option>
+                                <option value="modelo1">VOLKSWAGEM VIRTUS 1.0 PRETO - SZA9E20</option>
+                                <option value="modelo2">VOLKSWAGEM VIRTUS 1.0 PRETO - SZA9I20</option>
+                                <option value="modelo3">CHEVROLET S10 BRANCA - SIC5E83</option>
+                                <option value="modelo3">CHEVROLET S10 preto - SIH0G81</option>
+                                <option value="modelo3">CHEVROLET S10 preto - SIP3G83</option>
+                                <option value="modelo3">HONDA / XRE 300 - QDT6112</option>
                             </select>
-                            <i class="bi bi-caret-down-fill icone-select"></i>
                         </div>
                     </div>
+
+
                     <div class="col-md-2">
                         <input class="form-control input-line" type="number" placeholder="Quilometragem inicial">
                     </div>
@@ -94,8 +94,7 @@
             </section>
 
             <!-- 4. Botão de envio -->
-            <button class="btn-enviar d-block mx-auto text-uppercase my-5 fw-bold"><i
-                    class="bi bi-cursor-fill me-2"></i>Enviar</button>
+            <button class="btn-enviar d-block mx-auto text-uppercase my-5 fw-bold"><i class="bi bi-cursor-fill me-2"></i>Enviar</button>
         </form>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
