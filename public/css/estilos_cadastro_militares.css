@@ -1,0 +1,188 @@
+/* Reset CSS - meyerweb.com */
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Configuração gerais (Variáveis) */
+
+:root {
+    /* Cores */
+    --cor-primaria: #1e325c;
+    --cor-secundaria: #f2f2f2;
+    --cor-titulo: #FFFFFF;
+    --cor-label: #000000;
+    --cor-texto: #333333;
+    --cor-fundo: #FFFFFF;
+    --cor-borda-input: #CCCCCC;
+    --cor-botão-bg: #007BFF;
+    --cor-botão-texto: #FFFFFF;
+    /* Fontes - Escolher uma fonte para formulário e o seu peso */
+    --fonte-principal: ;
+    --fonte-titulo-tamanho: 36px;
+    --fonte-texto-tamanho: 16px;
+    /* Espaçamentos */
+    --espacamento-padrao-horizontal: 40px;
+    --espacamento-padrao-vertical: 50px;
+}
+
+
+/* Cabeçalho */
+
+/* Definição de uma cor de fundo */
+body {
+    background-color: var(--cor-fundo);
+}
+
+/* Estilização do cabeçalho */
+div.header_container {
+    background-color: var(--cor-primaria);
+    height: 160px;
+    padding: var(--espacamento-padrao-horizontal);
+}
+
+/* Estilização do título no cabeçalho */
+div.header_container>h1 {
+    color: var(--cor-titulo);
+    font-size: var(--fonte-titulo-tamanho);
+}
+
+/* Logos no cabeçalho */
+.logo-mppa {
+    width: auto;
+    height: 60px;
+    flex-shrink: 0;
+}
+
+.logo-gsi {
+    height: 70px;
+    width: auto;
+    flex-shrink: 0;
+}
