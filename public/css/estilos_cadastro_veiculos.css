@@ -357,18 +357,22 @@ textarea:focus {
 
 /* Estilização do botão de envio */
 .btn-enviar {
-    width: 250px;
-    height: 70px;
+    width: 300px;
+    height: 48px;
+    font-size: 1.25rem;
     color: var(--cor-botão-texto);
-    background-color: var(--cor-botão-bg);
+    background-color: var(--cor-primaria);
     border: none;
     border-radius: 12px;
+    transition: transform 1s, box-shadow 1s, border-radius 1s;  
 }
 
 /* Efeito hover no botão de envio */
 button:hover {
     background-color: var(--cor-primaria);
     cursor: pointer;
+    transform: scale(1.15);
+    border-radius: 4px;
 }
 
 /* Mantem o padrão visual do botão em todas as telas */

@@ -186,3 +186,140 @@ div.header_container>h1 {
     width: auto;
     flex-shrink: 0;
 }
+
+
+/* Configuração do corpo do formulário */
+
+/* Configuração do corpo das seções do formulário */
+.section-box {
+    background-color: var(--cor-secundaria);
+    border: 1px solid var(--cor-borda-input);
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Ajuste visual do título de seção */
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* Mantém o comportamento responsivo perfeito */
+.flex-item {
+    flex: 1;
+    min-width: 220px;
+}
+
+/* Destacar o campo quando selecionado */
+.input-line:focus {
+    outline: none;
+    box-shadow: none;
+    border-bottom: 2px solid #007BFF;
+}
+
+/* Estilização dos subtítulos */
+h2 {
+    color: var(--cor-label);
+}
+
+/* Estilização dos subtítulos de subseções */
+.subsection-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--cor-label);
+    border-bottom: 1px solid var(--cor-borda-input);
+    padding-bottom: 10px;
+}
+
+/* Configurações para a tabela */
+
+
+
+/* Regras locais para a tabela de cursos: centralização e quebra responsiva */
+.tabela-cursos th, .tabela-cursos td {
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    }
+/* Estilização do botão deletar */
+.btn-deletar-curso {
+    cursor: pointer;
+    color: #dc3545;
+    border: none;
+    background: none;
+    padding: 0;
+    transition: color 0.2s;
+    }
+
+.btn-deletar-curso:hover {
+    color: #c82333;
+    background: none;
+    transform: none;
+    border-radius: 0;
+    }
+
+/* Estilização do botão visualizar */
+.btn-visualizar-curso {
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+    margin-right: 8px; /* espaçamento entre ícones */
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.2s;
+}
+
+.btn-visualizar-curso:hover {
+    background: none;
+    transform: none;
+    border-radius: 0;
+}
+
+/* Textarea fixa, sem permitir redimensionamento */
+.no-resize {
+    resize: none;
+    }
+
+/* botão de envio */
+
+/* Estilização do botão de envio */
+.btn-enviar {
+    width: 300px;
+    height: 48px;
+    font-size: 1.25rem;
+    color: var(--cor-botão-texto);
+    background-color: var(--cor-primaria);
+    border: none;
+    border-radius: 12px;
+    transition: transform 1s, box-shadow 1s, border-radius 1s;  
+}
+
+/* Efeito hover no botão de envio */
+button:hover {
+    background-color: var(--cor-primaria);
+    cursor: pointer;
+    transform: scale(1.15);
+    border-radius: 4px;
+}
+
+/* Neutraliza o hover global para botões de ação da tabela */
+.btn-deletar-curso:hover,
+.btn-visualizar-curso:hover {
+    background-color: transparent;
+    transform: none;
+    border-radius: 0;
+}
+
+/* Mantem o padrão visual do botão em todas as telas */
+.btn-enviar {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.btn-enviar i {
+    display: inline-block !important;
+}
