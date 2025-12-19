@@ -1,4 +1,4 @@
-// Script para inserir os cursos na tabela a partir do modal
+﻿// Script para inserir os cursos na tabela a partir do modal
         document.addEventListener('DOMContentLoaded', function () {
             var form = document.getElementById('formCurso');
             if (!form) return;
@@ -25,7 +25,7 @@
                 var file = (fileInput && fileInput.files && fileInput.files[0]) ? fileInput.files[0] : null;
 
                 var tr = document.createElement('tr');
-                [nome, descricao, (carga || '—'), formatDate(data)].forEach(function (val) {
+                [nome, descricao, (carga || ''), formatDate(data)].forEach(function (val) {
                     var td = document.createElement('td');
                     td.textContent = val;
                     td.classList.add('text-center', 'align-middle');
@@ -40,7 +40,7 @@
                     objectUrl = URL.createObjectURL(file);
                     tdUpload.textContent = file.name;
                 } else {
-                    tdUpload.textContent = '—';
+                    tdUpload.textContent = '';
                 }
                 tr.appendChild(tdUpload);
 
@@ -51,26 +51,41 @@
                 // Botão de visualizar PDF
                 var btnView = document.createElement('button');
                 btnView.type = 'button';
-                btnView.className = 'btn-visualizar-curso';
+                btnView.className = 'btn btn-link p-0 me-2';
                 btnView.innerHTML = '<i class="bi bi-eye"></i>';
-                btnView.title = 'Visualizar PDF';
+                btnView.setAttribute('data-bs-toggle', 'tooltip');
+                btnView.setAttribute('data-bs-title', 'Visualizar PDF');
+                btnView.setAttribute('aria-label', 'Visualizar');
                 btnView.addEventListener('click', function () {
                     visualizarPdf(objectUrl);
+                    // Destruir tooltip após visualizar
+                    var viewTooltip = bootstrap.Tooltip.getInstance(btnView);
+                    if (viewTooltip) viewTooltip.dispose();
                 });
                 tdAcao.appendChild(btnView);
+                new bootstrap.Tooltip(btnView);
 
                 var btnDelete = document.createElement('button');
                 btnDelete.type = 'button';
-                btnDelete.className = 'btn-deletar-curso';
-                btnDelete.innerHTML = '<i class="bi bi-trash"></i>';
-                btnDelete.title = 'Deletar este curso';
+                btnDelete.className = 'btn btn-link text-danger p-0 btn-remover';
+                btnDelete.innerHTML = '<i class="bi bi-trash-fill"></i>';
+                btnDelete.setAttribute('data-bs-toggle', 'tooltip');
+                btnDelete.setAttribute('data-bs-title', 'Deletar este curso');
+                btnDelete.setAttribute('aria-label', 'Deletar');
                 btnDelete.addEventListener('click', function () {
                     if (objectUrl) {
                         URL.revokeObjectURL(objectUrl);
                     }
+                    // Destruir tooltips antes de remover a linha
+                    var viewTooltip = bootstrap.Tooltip.getInstance(btnView);
+                    if (viewTooltip) viewTooltip.dispose();
+                    var deleteTooltip = bootstrap.Tooltip.getInstance(btnDelete);
+                    if (deleteTooltip) deleteTooltip.dispose();
                     tr.remove();
                 });
                 tdAcao.appendChild(btnDelete);
+                new bootstrap.Tooltip(btnDelete);
+
                 tr.appendChild(tdAcao);
 
                 tbody.appendChild(tr);
