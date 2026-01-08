@@ -1,4 +1,16 @@
-// JS para funcionalidades da solicitação de escolta
+
+// Código JS para apresentação do modal
+
+/* OPTION 1 */
+
+const myMODAL = new bootstrap.Modal('#modal_01');
+
+window.addEventListener('DOMContentLoaded', () => {
+    myMODAL.show();
+});
+
+
+// Código JS para funcionalidades da solicitação de escolta
 
 (() => {
 	const form = document.getElementById('formEquipeMilitar');
