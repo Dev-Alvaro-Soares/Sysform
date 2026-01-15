@@ -1,0 +1,3 @@
+- Pegar o código de teste de conexão de banco de dados com pdo e adaptar para o projeto dos formulários. 
+
+- Fazer a validação dos dados de entrada.

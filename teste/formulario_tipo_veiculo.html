@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário MPPA / GSI</title>
+    <!-- Favicon do MPPA -->
+    <link rel="shortcut icon" href="../public/img/faviconMPPA.png" type="image/x-icon">
+    <!-- CSS personalizado (mesmo estilo de solicitação de veículos) -->
+    <link rel="stylesheet" href="../public/css/estilos_cadastro_veiculos.css">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <!-- Ícones Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+    <!-- Cabeçalho -->
+    <header>
+        <div class="header_container d-flex align-items-center justify-content-between">
+            <h1 class="titulo-header">Tipo de veículo</h1>
+            <div class="d-flex align-items-center gap-4">
+                <img class="logo-mppa" src="../public/img/logoMppaBranco.png" alt="Logo do MPPA">
+                <img class="logo-gsi" src="../public/img/logoGsiMppa.png" alt="Logo do GSI">
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <form id="tpveiculo" action="./tpveiculo.php" method="POST">
+            <!-- Dados do veículo -->
+            <section class="section-box p-3 mx-4 my-3">
+                <h2 class="section-title mb-3">Dados do veículo</h2>
+                <div class="row g-4">
+                    <div class="col-12 col-md-6">
+                        <label for="nomeveiculo" class="form-label">Tipo do veículo</label>
+                        <input class="form-control input-line" type="text" placeholder="Ex: Caminhonete" name="nomeveiculo" id="nomeveiculo" required minlength="3" maxlength="50">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="placa" class="form-label">Placa</label>
+                        <input class="form-control input-line" type="text" placeholder="ABC-1234" name="placa" id="placa" required pattern="[A-Z]{3}-?[0-9]{4}" maxlength="8" style="text-transform:uppercase;">
+                    </div>
+                </div>
+            </section>
+type="submit" 
+            <!-- Botão de ação -->
+            <button class="btn-enviar d-block mx-auto text-uppercase my-5 fw-bold"><i class="bi bi-arrow-repeat me-2"></i>Cadastrar</button>
+        </form>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+
+</html>
