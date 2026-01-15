@@ -2,11 +2,11 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class CreateVeiculosTable extends AbstractMigration
+class CreateRegistroVeiculosTable extends AbstractMigration
 {
     public function change()
     {
-        $table = $this->table('veiculos');
+        $table = $this->table('registro_veiculos');
         $table->addColumn('nome', 'string', ['limit' => 150, 'null' => true])
               ->addColumn('matricula', 'string', ['limit' => 50, 'null' => true])
               ->addColumn('data_missao', 'date', ['null' => true])

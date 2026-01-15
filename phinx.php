@@ -10,7 +10,7 @@ return [
         'development' => [
             'adapter' => 'mysql',
             'host' => '127.0.0.1',
-            'name' => 'sisforms',
+            'name' => '3mil',
             'user' => 'root',
             'pass' => '',
             'port' => 3306,

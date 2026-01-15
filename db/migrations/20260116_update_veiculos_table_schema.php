@@ -2,11 +2,11 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class UpdateVeiculosTableSchema extends AbstractMigration
+class UpdateRegistroVeiculosTableSchema extends AbstractMigration
 {
     public function change()
     {
-        $table = $this->table('veiculos');
+        $table = $this->table('registro_veiculos');
 
         if (!$table->hasColumn('nome')) {
             $table->addColumn('nome', 'string', ['limit' => 150, 'null' => true]);

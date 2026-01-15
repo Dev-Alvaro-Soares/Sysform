@@ -2,11 +2,11 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class ModifyVeiculosColumns extends AbstractMigration
+class ModifyRegistroVeiculosColumns extends AbstractMigration
 {
     public function change()
     {
-        $table = $this->table('veiculos');
+        $table = $this->table('registro_veiculos');
 
         // Renomear colunas se existirem
         if ($table->hasColumn('retirada_at') && !$table->hasColumn('retirada')) {

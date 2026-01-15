@@ -28,7 +28,7 @@
         </div>
     </header>
     <main>
-        <form method="post" action="../public/save_solicitacao.php">
+        <form id="solicitacaoForm" method="post" action="../public/save_solicitacao.php" novalidate>
 
             <!-- 1. Dados do condutor -->
             <section class="section-box p-3 mx-4 my-3">
@@ -66,22 +66,22 @@
 
 
                     <div class="col-md-2">
-                        <input name="quilometragem_inicial" class="form-control input-line" type="number" placeholder="Quilometragem inicial" min="0" step="1" required>
+                        <input name="quilometragem_inicial" class="form-control input-line" type="number" placeholder="KM inicial" min="0" step="1" required>
                     </div>
                     <div class="col-md-2">
-                        <input name="quilometragem_final" class="form-control input-line" type="number" placeholder="Quilometragem final" min="0" step="1">
+                        <input name="quilometragem_final" class="form-control input-line" type="number" placeholder="KM final" min="0" step="1">
                     </div>
                     <div class="col-md-2">
                         <div class="input-wrapper">
                             <input name="retirada" type="text" class="form-control campo-horario"
-                                placeholder="Horário de retirada (hh:mm)" pattern="[0-2][0-9]:[0-5][0-9]" maxlength="5">
+                                placeholder="Hora de retirada (hh:mm)" pattern="[0-2][0-9]:[0-5][0-9]" maxlength="5">
                             <i class="bi bi-clock-fill icone-horario"></i>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="input-wrapper">
                             <input name="devolucao" type="text" class="form-control campo-horario"
-                                placeholder="Horário de devolução (hh:mm)" pattern="[0-2][0-9]:[0-5][0-9]" maxlength="5">
+                                placeholder="Hora de devolução (hh:mm)" pattern="[0-2][0-9]:[0-5][0-9]" maxlength="5">
                             <i class="bi bi-clock-fill icone-horario"></i>
                         </div>
                     </div>
@@ -101,6 +101,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
+    <script src="../public/js/validacao_veiculos.js"></script>
         <!-- Modal de sucesso -->
         <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -111,6 +112,23 @@
                     </div>
                     <div class="modal-body">
                         Sua Solicitação foi enviada.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de erro (validação) -->
+        <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title" id="errorModalLabel">Erro</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="errorModalBody">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>

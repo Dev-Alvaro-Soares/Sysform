@@ -31,7 +31,7 @@ if (count($errors) > 0) {
 }
 
 $dbHost = '127.0.0.1';
-$dbName = 'sisforms';
+$dbName = '3mil';
 $dbUser = 'root';
 $dbPass = '';
 
@@ -41,8 +41,8 @@ try {
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
 
-        $sql = "INSERT INTO veiculos (modelo, nome, matricula, data_missao, quilometragem_inicial, quilometragem_final, retirada, devolucao, observacao)
-            VALUES (:modelo, :nome, :matricula, :data_missao, :qi, :qf, :retirada, :devolucao, :observacao)";
+            $sql = "INSERT INTO registro_veiculos (modelo, nome, matricula, data_missao, quilometragem_inicial, quilometragem_final, retirada, devolucao, observacao)
+                VALUES (:modelo, :nome, :matricula, :data_missao, :qi, :qf, :retirada, :devolucao, :observacao)";
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':modelo', $modelo ?: null, PDO::PARAM_STR);

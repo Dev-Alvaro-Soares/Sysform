@@ -2,11 +2,11 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class AdjustVeiculosColumnTypes extends AbstractMigration
+class AdjustRegistroVeiculosColumnTypes extends AbstractMigration
 {
     public function change()
     {
-        $table = $this->table('veiculos');
+        $table = $this->table('registro_veiculos');
 
         // nome: nome completo
         if ($table->hasColumn('nome')) {
