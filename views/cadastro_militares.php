@@ -50,7 +50,7 @@
         </div>
     </header>
     <main>
-        <form action="">
+        <form id="cadastroMilitarForm" action="../app/Controllers/CadastroMilitarController.php" method="POST" enctype="multipart/form-data">
 
             <!-- 1. Identificação do militar -->
             <section class="section-box p-3 mx-4 my-3">
@@ -58,15 +58,15 @@
 
                 <div class="row g-4">
                     <div class="col-12 col-md-6">
-                        <input class="form-control input-line" type="text" placeholder="Nome">
+                        <input class="form-control input-line" type="text" name="nome_militar" placeholder="Nome">
                     </div>
                     <div class="col-12 col-md-6">
-                        <input class="form-control input-line" type="text" placeholder="Nome de guerra">
+                        <input class="form-control input-line" type="text" name="nome_guerra" placeholder="Nome de guerra">
                     </div>
 
                     <div class="col-12 col-md-6">
                         <div class="input-wrapper">
-                            <select class="form-select">
+                            <select class="form-select" name="patente">
                                 <option value="" selected disabled>Patente</option>
                                 <option value="Coronel">Cel. (Coronel)</option>
                                 <option value="Tenente Coronel">Ten. Cel. (Tenente Coronel)</option>
@@ -84,15 +84,16 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
-                        <input class="form-control input-line" type="text" placeholder="Lotação">
+                        <input class="form-control input-line" type="text" name="lotacao" placeholder="Lotação">
                     </div>
 
                     <div class="col-12 col-md-6">
-                        <input class="form-control input-line" type="text"
+                        <input class="form-control input-line" type="text" name="doc_militar_numero"
                             placeholder="Nº documento de identificação do militar">
                     </div>
                     <div class="col-12 col-md-6">
-                        <input class="form-control input-line" type="file"
+                        <label class="form-label"></label>
+                        <input class="form-control input-line" type="file" name="doc_militar" accept=".pdf"
                             placeholder="Faça o upload do documento de identificação">
                     </div>
                 </div>
@@ -104,17 +105,18 @@
 
                 <div class="row g-4">
                     <div class="col-12">
-                        <input class="form-control input-line" type="text" placeholder="Nome">
+                        <input class="form-control input-line" type="text" name="nome_civil" placeholder="Nome do pai">
                     </div>
                     <div class="col-12">
-                        <input class="form-control input-line" type="text" placeholder="Nome da mãe">
+                        <input class="form-control input-line" type="text" name="nome_mae" placeholder="Nome da mãe">
                     </div>
                     <div class="col-12">
-                        <input class="form-control input-line" type="text"
-                            placeholder="Nº documento de identificação do militar">
+                        <input class="form-control input-line" type="text" name="doc_civil_numero"
+                            placeholder="Nº documento de identificação civil">
                     </div>
                     <div class="col-12">
-                        <input class="form-control input-line" type="file"
+                        <label class="form-label"></label>
+                        <input class="form-control input-line" type="file" name="doc_civil" accept=".pdf"
                             placeholder="Faça o upload do documento de identificação">
                     </div>
                 </div>
@@ -129,17 +131,17 @@
                     <h3 class="subsection-title mb-3">Pessoal</h3>
                     <div class="row g-4">
                         <div class="col-12 col-lg-4">
-                            <input class="form-control input-line" type="text" placeholder="Endereço, número">
+                            <input class="form-control input-line" type="text" name="endereco_pessoal" placeholder="Endereço, número">
                         </div>
                         <div class="col-12 col-lg-2">
-                            <input class="form-control input-line" type="text" placeholder="Bairro">
+                            <input class="form-control input-line" type="text" name="bairro_pessoal" placeholder="Bairro">
                         </div>
                         <div class="col-12 col-lg-2">
-                            <input class="form-control input-line" type="text" placeholder="Cidade">
+                            <input class="form-control input-line" type="text" name="cidade_pessoal" placeholder="Cidade">
                         </div>
                         <div class="col-12 col-lg-2">
                             <div class="input-wrapper">
-                                <select class="form-select">
+                                <select class="form-select" name="estado_pessoal">
                                     <option value="" selected disabled>Estado</option>
                                     <option value="AC">Acre</option>
                                     <option value="AL">Alagoas</option>
@@ -172,7 +174,7 @@
                             </div>
                         </div>
                         <div class="col-12 col-lg-2">
-                            <input class="form-control input-line" type="number" placeholder="CEP">
+                            <input class="form-control input-line" type="number" name="cep_pessoal" placeholder="CEP">
                         </div>
                     </div>
                 </div>
@@ -182,17 +184,17 @@
                     <h3 class="subsection-title mb-3">Funcional</h3>
                     <div class="row g-4">
                         <div class="col-12 col-lg-4">
-                            <input class="form-control input-line" type="text" placeholder="Endereço, número">
+                            <input class="form-control input-line" type="text" name="endereco_funcional" placeholder="Endereço, número">
                         </div>
                         <div class="col-12 col-lg-2">
-                            <input class="form-control input-line" type="text" placeholder="Bairro">
+                            <input class="form-control input-line" type="text" name="bairro_funcional" placeholder="Bairro">
                         </div>
                         <div class="col-12 col-lg-2">
-                            <input class="form-control input-line" type="text" placeholder="Cidade">
+                            <input class="form-control input-line" type="text" name="cidade_funcional" placeholder="Cidade">
                         </div>
                         <div class="col-12 col-lg-2">
                             <div class="input-wrapper">
-                                <select class="form-select">
+                                <select class="form-select" name="estado_funcional">
                                     <option value="" selected disabled>Estado</option>
                                     <option value="AC">Acre</option>
                                     <option value="AL">Alagoas</option>
@@ -225,7 +227,7 @@
                             </div>
                         </div>
                         <div class="col-12 col-lg-2">
-                            <input class="form-control input-line" type="number" placeholder="CEP">
+                            <input class="form-control input-line" type="number" name="cep_funcional" placeholder="CEP">
                         </div>
                     </div>
                 </div>
@@ -238,44 +240,44 @@
                 <div class="row g-4">
                     <div class="col-12 col-lg-3">
                         <div class="input-wrapper">
-                            <select class="form-select">
+                            <select class="form-select" name="qualificacao">
                                 <option value="" selected disabled>Qualificação</option>
-                                <option value="valor1">Ensino médio</option>
-                                <option value="valor2">Ensino superior (Graduação)</option>
-                                <option value="valor3">Ensino superior (Pós-graduação)</option>
-                                <option value="valor3">Mestrado</option>
-                                <option value="valor3">Doutorado</option>
+                                <option value="Ensino médio">Ensino médio</option>
+                                <option value="Ensino superior (Graduação)">Ensino superior (Graduação)</option>
+                                <option value="Ensino superior (Pós-graduação)">Ensino superior (Pós-graduação)</option>
+                                <option value="Mestrado">Mestrado</option>
+                                <option value="Doutorado">Doutorado</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-12 col-lg-3">
-                        <input class="form-control input-line" type="text" placeholder="Indicado por">
+                        <input class="form-control input-line" type="text" name="indicado_por" placeholder="Indicado por">
                     </div>
                     <div class="col-12 col-lg-3">
-                        <input class="telefone-input form-control input-line" type="number"
+                        <input class="telefone-input form-control input-line" type="tel" name="telefone"
                             placeholder="Telefone (DDD)">
                     </div>
                     <div class="col-12 col-lg-3">
-                        <input class="form-control input-line" type="email" placeholder="Email">
+                        <input class="form-control input-line" type="email" name="email" placeholder="Email">
                     </div>
                     <div class="col-12 col-lg-6">
-                        <input class="form-control input-line" type="text" placeholder="Cônjuge">
+                        <input class="form-control input-line" type="text" name="conjuge" placeholder="Cônjuge">
                     </div>
                     <div class="col-12 col-lg-3">
-                        <input class="form-control input-line" type="number" placeholder="Nº de filhos">
+                        <input class="form-control input-line" type="number" name="numero_filhos" placeholder="Nº de filhos">
                     </div>
                     <div class="col-12 col-lg-3">
                         <div class="input-wrapper">
-                            <select class="form-select custom-input">
+                            <select class="form-select custom-input" name="tipo_sanguineo">
                                 <option value="" selected disabled>Tipo sanguíneo</option>
-                                <option value="valor1">O+</option>
-                                <option value="valor2">A+</option>
-                                <option value="valor3">B+</option>
-                                <option value="valor3">AB+</option>
-                                <option value="valor3">O-</option>
-                                <option value="valor3">A-</option>
-                                <option value="valor3">B-</option>
-                                <option value="valor3">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="A+">A+</option>
+                                <option value="B+">B+</option>
+                                <option value="AB+">AB+</option>
+                                <option value="O-">O-</option>
+                                <option value="A-">A-</option>
+                                <option value="B-">B-</option>
+                                <option value="AB-">AB-</option>
                             </select>
                         </div>
                     </div>
@@ -283,14 +285,14 @@
                         <label class="form-label fw-semibold">Vínculo com o Ministério Público:</label>
                         <div class="d-flex gap-4 mt-2">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="vinculo" id="vinculo-ativo"
+                                <input class="form-check-input" type="radio" name="vinculo_mp" id="vinculo-ativo"
                                     value="ativo" checked>
                                 <label class="form-check-label" for="vinculo-ativo">
                                     Ativo (Agregado)
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="vinculo" id="vinculo-reserva"
+                                <input class="form-check-input" type="radio" name="vinculo_mp" id="vinculo-reserva"
                                     value="reserva">
                                 <label class="form-check-label" for="vinculo-reserva">
                                     Reserva (Reconvocado)
@@ -333,10 +335,13 @@
                 </div>
             </section>
 
+            <!-- 6. Botão de envio -->
+            <button type="submit" class="btn-enviar d-block mx-auto text-uppercase my-5 fw-bold">
+                <i class="bi bi-cursor-fill me-2"></i>Enviar
+            </button>
+
         </form>
     </main>
-
-    <!-- Modal: Novo anexo -->
     <div class="modal fade" id="modalCurso" tabindex="-1" aria-labelledby="modalCursoLabel" aria-hidden="true">
         <div class="modal-dialog">
             <form class="modal-content" id="formCurso">
@@ -376,14 +381,89 @@
         </div>
     </div>
 
-    <!-- 6. Botão de envio -->
-    <button class="btn-enviar d-block mx-auto text-uppercase my-5 fw-bold"><i class="bi bi-cursor-fill me-2"></i>Enviar</button>
+        <!-- Modal de sucesso -->
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-success text-white">
+                        <h5 class="modal-title" id="successModalLabel">Sucesso</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Cadastro de militar realizado com sucesso.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de erro (validação) -->
+        <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title" id="errorModalLabel">Erro</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="errorModalBody">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
             <!-- Integração do Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
+        <!-- Script para customizar texto de upload de arquivos -->
+        <script>
+            document.querySelectorAll('input[type="file"]').forEach(input => {
+                const parentLabel = input.parentElement;
+                const label = parentLabel.querySelector('label');
+                
+                if (label) {
+                    const originalText = label.textContent;
+                    input.addEventListener('change', function() {
+                        if (this.files && this.files.length > 0) {
+                            label.textContent = this.files[0].name;
+                        } else {
+                            label.textContent = originalText;
+                        }
+                    });
+                    
+                    // Mostrar texto customizado ao carregar a página
+                    label.textContent = 'Anexe o documento de identificação militar';
+                }
+            });
+        </script>
+
             <!-- Integração do JS personalizado -->
+        <script src="../public/js/validacao_militares.js"></script>
         <script src="../public/js/script-cadastro-militar.js"></script>
+
+        <!-- Script para exibir modal de sucesso -->
+        <script>
+            (function(){
+                try {
+                    const params = new URLSearchParams(window.location.search);
+                    if (params.get('success') === '1') {
+                        const modalEl = document.getElementById('successModal');
+                        const modal = new bootstrap.Modal(modalEl);
+                        modal.show();
+                        // remover param da URL para evitar reaparecer ao recarregar
+                        params.delete('success');
+                        const newUrl = window.location.pathname + (params.toString() ? ('?' + params.toString()) : '');
+                        history.replaceState(null, '', newUrl);
+                    }
+                } catch (e) {
+                    console.error('Erro ao exibir modal:', e);
+                }
+            })();
+        </script>
 </body>
 
 </html>

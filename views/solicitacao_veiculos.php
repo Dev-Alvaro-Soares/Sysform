@@ -28,7 +28,7 @@
         </div>
     </header>
     <main>
-        <form id="solicitacaoForm" method="post" action="../public/save_solicitacao.php" novalidate>
+        <form id="solicitacaoForm" method="post" action="../app/Controllers/SolicitacaoController.php" novalidate>
 
             <!-- 1. Dados do condutor -->
             <section class="section-box p-3 mx-4 my-3">

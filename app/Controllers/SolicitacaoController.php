@@ -1,7 +1,10 @@
 <?php
-// Handler para salvar solicitação de veículos via PDO
+/**
+ * Controller para salvar solicitação de veículos via PDO
+ */
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../views/solicitacao_veiculos.php');
+    header('Location: ../../views/solicitacao_veiculos.php');
     exit;
 }
 
@@ -26,7 +29,7 @@ if (!is_int($quilometragem_inicial) || $quilometragem_inicial < 0) {
 if (count($errors) > 0) {
     echo '<h3>Erros:</h3><ul>'; 
     foreach ($errors as $e) echo '<li>' . htmlspecialchars($e) . '</li>';
-    echo '</ul><p><a href="../views/solicitacao_veiculos.php">Voltar</a></p>';
+    echo '</ul><p><a href="../../views/solicitacao_veiculos.php">Voltar</a></p>';
     exit;
 }
 
@@ -41,8 +44,8 @@ try {
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
 
-            $sql = "INSERT INTO registro_veiculos (modelo, nome, matricula, data_missao, quilometragem_inicial, quilometragem_final, retirada, devolucao, observacao)
-                VALUES (:modelo, :nome, :matricula, :data_missao, :qi, :qf, :retirada, :devolucao, :observacao)";
+    $sql = "INSERT INTO registro_veiculos (modelo, nome, matricula, data_missao, quilometragem_inicial, quilometragem_final, retirada, devolucao, observacao)
+            VALUES (:modelo, :nome, :matricula, :data_missao, :qi, :qf, :retirada, :devolucao, :observacao)";
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':modelo', $modelo ?: null, PDO::PARAM_STR);
@@ -61,13 +64,12 @@ try {
 
     $stmt->execute();
 
-    header('Location: ../views/solicitacao_veiculos.php?success=1');
+    header('Location: ../../views/solicitacao_veiculos.php?success=1');
     exit;
 
 } catch (PDOException $e) {
     echo '<h3>Erro ao conectar/inserir no banco:</h3>' . htmlspecialchars($e->getMessage());
-    echo '<p><a href="../views/solicitacao_veiculos.php">Voltar</a></p>';
+    echo '<p><a href="../../views/solicitacao_veiculos.php">Voltar</a></p>';
     exit;
 }
-
 ?>
