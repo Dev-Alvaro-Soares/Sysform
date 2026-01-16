@@ -9,6 +9,8 @@
     <link rel="shortcut icon" href="../public/img/faviconMPPA.png" type="image/x-icon">
     <!-- Integração do CSS personalizado -->
     <link rel="stylesheet" href="../public/css/estilos_solicitacao_escolta.css">
+    <!-- Flatpickr CSS (local) -->
+    <link rel="stylesheet" href="../flatpickr/flatpickr.min.css">
     <!-- Integração do Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
@@ -87,7 +89,7 @@
         </div>
     </header>
     <main>
-        <form action="">
+        <form id="solicitacaoForm" method="post" action="../app/Controllers/SolicitacaoController.php" novalidate>
 
             <!-- 1. Dados do protegido -->
             <section class="section-box p-3 mx-4 my-3">
@@ -140,9 +142,59 @@
                                     </table>
                                 </div>
             </section>
-            
 
+            <!-- 3. Dados da missão -->
+            <section class="section-box p-3 mx-4 my-3">
+                <h2 class="section-title mb-3">3. Dados da missão</h2>
+
+                <div class="row g-4">
+                    <div class="col-12">
+                        <div class="position-relative">
+                            <input id="localidade" class="form-control input-line" type="text" placeholder="Localidades" autocomplete="off">
+                            <div id="localidade-suggestions" class="autocomplete-suggestions"></div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="input-wrapper">
+                        <input class="form-control input-line campo-data" type="text" placeholder="Data do início da missão (dd.mm.aaaa)">
+                        <i class="bi bi-calendar-date-fill icone-data"></i>
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="input-wrapper">
+                        <input class="form-control input-line campo-data" type="text" placeholder="Data do final da missão (dd.mm.aaaa)">
+                        <i class="bi bi-calendar-date-fill icone-data"></i>
+                      </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-wrapper">
+                            <input class="form-control input-line campo-horario" type="text" placeholder="Horário de chegada do local (hh:mm)" pattern="[0-2][0-9]:[0-5][0-9]" maxlength="5">
+                            <i class="bi bi-clock-fill icone-horario"></i>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-wrapper">
+                            <input class="form-control input-line campo-horario" type="text" placeholder="Horário de saída do local (hh:mm)" pattern="[0-2][0-9]:[0-5][0-9]" maxlength="5">
+                            <i class="bi bi-clock-fill icone-horario"></i>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <textarea class="form-control input-line" rows="3" placeholder="Descrição das atividades realizadas e locais frequentados"></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. Observações -->
+            <section class="section-box p-3 mx-4 my-3">
+                <h2 class="section-title mb-3">4. Observações</h2>
+                <textarea name="observacao" class="form-control input-line" placeholder="Observações"></textarea>
+            </section>
+
+            <!-- Botão de envio -->
+            <button type="submit" class="btn-enviar d-block mx-auto text-uppercase my-5 fw-bold"><i class="bi bi-cursor-fill me-2"></i>Enviar</button>
         </form>
+
+        <p class="text-danger fs-5 ms-3">SIGILO: O relatório é documento de inteligência/segurança institucional e deve ser tratado com o máximo de sigilo (Resolução 13/2024 MPPA, art. 28).</p>
 
         <!-- Modal: Adicionar militar -->
         <div class="modal fade" id="modalEquipeMilitar" tabindex="-1" aria-labelledby="modalEquipeMilitarLabel" aria-hidden="true">
@@ -192,7 +244,79 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
             crossorigin="anonymous"></script>
+
+        <!-- Flatpickr (local) -->
+        <script src="../flatpickr/flatpickr.min.js"></script>
+        <script src="../flatpickr/l10n/pt.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // Inicializar Flatpickr
+                if (window.flatpickr) {
+                    flatpickr('.campo-data', {
+                        dateFormat: 'd.m.Y',
+                        locale: 'pt',
+                        allowInput: true
+                    });
+                }
+            });
+        </script>
+        <script src="../public/js/localidades-ibge.js"></script>
         <script src="../public/js/script-solicitacao-de-escolta.js"></script>
+
+        <!-- Modal de sucesso -->
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-success text-white">
+                        <h5 class="modal-title" id="successModalLabel">Sucesso</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Sua Solicitação foi enviada.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de erro (validação) -->
+        <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title" id="errorModalLabel">Erro</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="errorModalBody">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            (function(){
+                try {
+                    const params = new URLSearchParams(window.location.search);
+                    if (params.get('success') === '1') {
+                        const modalEl = document.getElementById('successModal');
+                        const modal = new bootstrap.Modal(modalEl);
+                        modal.show();
+                        // remover param da URL para evitar reaparecer ao recarregar
+                        params.delete('success');
+                        const newUrl = window.location.pathname + (params.toString() ? ('?' + params.toString()) : '');
+                        history.replaceState(null, '', newUrl);
+                    }
+                } catch (e) {
+                    // silencioso se algo falhar
+                    console.error(e);
+                }
+            })();
+        </script>
 </body>
 
 </html>

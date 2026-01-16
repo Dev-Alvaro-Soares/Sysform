@@ -92,9 +92,7 @@
                             placeholder="Nº documento de identificação do militar">
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label"></label>
-                        <input class="form-control input-line" type="file" name="doc_militar" accept=".pdf"
-                            placeholder="Faça o upload do documento de identificação">
+                        <input class="form-control input-line" type="file" name="doc_militar" accept=".pdf">
                     </div>
                 </div>
             </section>
@@ -115,9 +113,7 @@
                             placeholder="Nº documento de identificação civil">
                     </div>
                     <div class="col-12">
-                        <label class="form-label"></label>
-                        <input class="form-control input-line" type="file" name="doc_civil" accept=".pdf"
-                            placeholder="Faça o upload do documento de identificação">
+                        <input class="form-control input-line" type="file" name="doc_civil" accept=".pdf">
                     </div>
                 </div>
             </section>
@@ -418,28 +414,6 @@
 
             <!-- Integração do Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-
-        <!-- Script para customizar texto de upload de arquivos -->
-        <script>
-            document.querySelectorAll('input[type="file"]').forEach(input => {
-                const parentLabel = input.parentElement;
-                const label = parentLabel.querySelector('label');
-                
-                if (label) {
-                    const originalText = label.textContent;
-                    input.addEventListener('change', function() {
-                        if (this.files && this.files.length > 0) {
-                            label.textContent = this.files[0].name;
-                        } else {
-                            label.textContent = originalText;
-                        }
-                    });
-                    
-                    // Mostrar texto customizado ao carregar a página
-                    label.textContent = 'Anexe o documento de identificação militar';
-                }
-            });
-        </script>
 
             <!-- Integração do JS personalizado -->
         <script src="../public/js/validacao_militares.js"></script>

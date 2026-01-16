@@ -199,10 +199,83 @@ div.header_container>h1 {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Wrapper para ícone dentro do input (data) */
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* Espaço para o ícone à direita */
+.campo-data {
+    padding-right: 2.3rem;
+}
+
+/* Ícone de calendário posicionado dentro do campo */
+.icone-data {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 1.1rem;
+    color: #6c757d;
+}
+
+/* Espaço para o ícone de relógio à direita */
+.campo-horario {
+    padding-right: 2.3rem;
+}
+
+/* Ícone de relógio posicionado dentro do campo */
+.icone-horario {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 1.1rem;
+    color: #6c757d;
+}
+
 /* Ajuste visual do título de seção */
 .section-title {
     font-size: 1.1rem;
     font-weight: 600;
+}
+
+/* Autocomplete de localidade (API IBGE) */
+.autocomplete-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 250px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid #ccc;
+    border-top: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    z-index: 1000;
+    display: none;
+    margin-top: 2px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    z-index: 1000;
+    display: none;
+}
+
+.autocomplete-item {
+    padding: 10px 15px;
+    margin: 5px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.autocomplete-item:hover {
+    background-color: #f8f9fa;
+}
+
+.autocomplete-item:last-child {
+    border-bottom: none;
 }
 
 /* Mantém o comportamento responsivo perfeito */
@@ -239,4 +312,38 @@ textarea:focus {
     outline: none;
     box-shadow: none;
     border: none;
+}
+/* Botão de envio */
+
+/* Estilização do botão de envio */
+.btn-enviar {
+    width: 300px;
+    height: 48px;
+    font-size: 1.25rem;
+    color: var(--cor-botão-texto);
+    background-color: var(--cor-primaria);
+    border: none;
+    border-radius: 12px;
+    transition: transform 1s, box-shadow 1s, border-radius 1s;  
+}
+
+/* Efeito hover no botão de envio */
+button:hover {
+    background-color: var(--cor-primaria);
+    cursor: pointer;
+    transform: scale(1.15);
+    border-radius: 4px;
+}
+
+/* Mantem o padrão visual do botão em todas as telas */
+.btn-enviar {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.btn-enviar i {
+    display: inline-block !important;
 }
