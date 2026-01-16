@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class CreateRegistroVeiculosTable extends AbstractMigration
+class CreateVeiculosTable extends AbstractMigration
 {
     public function change()
     {

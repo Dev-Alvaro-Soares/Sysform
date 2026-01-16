@@ -89,7 +89,46 @@
         </div>
     </header>
     <main>
-        <form id="solicitacaoForm" method="post" action="../app/Controllers/SolicitacaoController.php" novalidate>
+        <form id="solicitacaoForm" method="post" action="../app/Controllers/SolicitacaoEscoltaController.php" novalidate>
+
+            <script>
+                // INTERCEPTAR SUBMIT IMEDIATAMENTE
+                document.addEventListener('DOMContentLoaded', function() {
+                    const form = document.getElementById('solicitacaoForm');
+                    if (form) {
+                        form.addEventListener('submit', function(e) {
+                            console.log('SUBMIT INTERCEPTADO');
+                            e.preventDefault();
+                            e.stopPropagation();
+                            
+                            const formData = new FormData(this);
+                            const action = this.getAttribute('action');
+                            
+                            fetch(action, {
+                                method: 'POST',
+                                body: formData
+                            })
+                            .then(r => r.json())
+                            .then(data => {
+                                console.log('Resposta:', data);
+                                if (data.success) {
+                                    const modal = new bootstrap.Modal(document.getElementById('successModal'));
+                                    modal.show();
+                                    form.reset();
+                                } else {
+                                    alert('Erro: ' + (data.errors ? data.errors[0] : 'Desconhecido'));
+                                }
+                            })
+                            .catch(err => {
+                                console.error('Erro:', err);
+                                alert('Erro ao enviar: ' + err.message);
+                            });
+                            
+                            return false;
+                        }, true);
+                    }
+                });
+            </script>
 
             <!-- 1. Dados do protegido -->
             <section class="section-box p-3 mx-4 my-3">
@@ -97,20 +136,20 @@
 
                 <div class="row g-4">
                     <div class="col-12 col-md-6">
-                        <input class="form-control input-line" type="text" placeholder="Nome">
+                        <input name="nome_protegido" class="form-control input-line" type="text" placeholder="Nome" required>
                     </div>
                     <div class="col-12 col-md-6">
-                        <select class="form-select custom-input">
+                        <select name="atividade_missao" class="form-select custom-input" required>
                             <option value="" selected disabled>Escolha a atividade realizada na missão</option>
-                            <option value="">Visita carcerária</option>
-                            <option value="">Acompanhamento em evento</option>
-                            <option value="">Júri</option>
-                            <option value="">Audiência</option>
-                            <option value="">Reunião por acumulação de cargo</option>
-                            <option value="">Diligências</option>
-                            <option value="">Inspeção</option>
-                            <option value="">Fiscalização</option>
-                            <option value="">Plantão em promotoria de Justiça</option>
+                            <option value="Visita carcerária">Visita carcerária</option>
+                            <option value="Acompanhamento em evento">Acompanhamento em evento</option>
+                            <option value="Júri">Júri</option>
+                            <option value="Audiência">Audiência</option>
+                            <option value="Reunião por acumulação de cargo">Reunião por acumulação de cargo</option>
+                            <option value="Diligências">Diligências</option>
+                            <option value="Inspeção">Inspeção</option>
+                            <option value="Fiscalização">Fiscalização</option>
+                            <option value="Plantão em promotoria de Justiça">Plantão em promotoria de Justiça</option>
                         </select>
                     </div>
                 </div>
@@ -150,36 +189,36 @@
                 <div class="row g-4">
                     <div class="col-12">
                         <div class="position-relative">
-                            <input id="localidade" class="form-control input-line" type="text" placeholder="Localidades" autocomplete="off">
+                            <input name="localidades" id="localidade" class="form-control input-line" type="text" placeholder="Localidades" autocomplete="off" required>
                             <div id="localidade-suggestions" class="autocomplete-suggestions"></div>
                         </div>
                     </div>
                     <div class="col-3">
                       <div class="input-wrapper">
-                        <input class="form-control input-line campo-data" type="text" placeholder="Data do início da missão (dd.mm.aaaa)">
+                        <input name="data_inicio_missao" class="form-control input-line campo-data" type="text" placeholder="Data do início da missão (dd.mm.aaaa)" required>
                         <i class="bi bi-calendar-date-fill icone-data"></i>
                       </div>
                     </div>
                     <div class="col-3">
                       <div class="input-wrapper">
-                        <input class="form-control input-line campo-data" type="text" placeholder="Data do final da missão (dd.mm.aaaa)">
+                        <input name="data_final_missao" class="form-control input-line campo-data" type="text" placeholder="Data do final da missão (dd.mm.aaaa)" required>
                         <i class="bi bi-calendar-date-fill icone-data"></i>
                       </div>
                     </div>
                     <div class="col-3">
                         <div class="input-wrapper">
-                            <input class="form-control input-line campo-horario" type="text" placeholder="Horário de chegada do local (hh:mm)" pattern="[0-2][0-9]:[0-5][0-9]" maxlength="5">
+                            <input name="horario_chegada" class="form-control input-line campo-horario" type="text" placeholder="Horário de chegada do local (hh:mm)" pattern="[0-2][0-9]:[0-5][0-9]" maxlength="5" required>
                             <i class="bi bi-clock-fill icone-horario"></i>
                         </div>
                     </div>
                     <div class="col-3">
                         <div class="input-wrapper">
-                            <input class="form-control input-line campo-horario" type="text" placeholder="Horário de saída do local (hh:mm)" pattern="[0-2][0-9]:[0-5][0-9]" maxlength="5">
+                            <input name="horario_saida" class="form-control input-line campo-horario" type="text" placeholder="Horário de saída do local (hh:mm)" pattern="[0-2][0-9]:[0-5][0-9]" maxlength="5" required>
                             <i class="bi bi-clock-fill icone-horario"></i>
                         </div>
                     </div>
                     <div class="col-12">
-                        <textarea class="form-control input-line" rows="3" placeholder="Descrição das atividades realizadas e locais frequentados"></textarea>
+                        <textarea name="descricao_atividades" class="form-control input-line" rows="3" placeholder="Descrição das atividades realizadas e locais frequentados" required></textarea>
                     </div>
                 </div>
             </section>
@@ -187,7 +226,7 @@
             <!-- 4. Observações -->
             <section class="section-box p-3 mx-4 my-3">
                 <h2 class="section-title mb-3">4. Observações</h2>
-                <textarea name="observacao" class="form-control input-line" placeholder="Observações"></textarea>
+                <textarea name="observacoes" class="form-control input-line" placeholder="Observações"></textarea>
             </section>
 
             <!-- Botão de envio -->
@@ -260,8 +299,21 @@
                 }
             });
         </script>
+        
+        <!-- Mostrar modal de instruções ao carregar a página -->
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const modalElement = document.getElementById('modal_01');
+                if (modalElement) {
+                    const modal = new bootstrap.Modal(modalElement);
+                    modal.show();
+                }
+            });
+        </script>
+        
         <script src="../public/js/localidades-ibge.js"></script>
-        <script src="../public/js/script-solicitacao-de-escolta.js"></script>
+        <!-- SCRIPT DE ESCOLTA DESABILITADO - usando inline script no formulário -->
+        <!-- <script src="../public/js/script-solicitacao-de-escolta.js"></script> -->
 
         <!-- Modal de sucesso -->
         <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">

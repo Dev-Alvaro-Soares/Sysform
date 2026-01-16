@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class ModifyRegistroVeiculosColumns extends AbstractMigration
+class ModifyVeiculosColumns extends AbstractMigration
 {
     public function change()
     {
