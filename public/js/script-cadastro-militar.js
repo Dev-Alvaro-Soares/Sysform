@@ -1,113 +1,172 @@
-﻿// Script para inserir os cursos na tabela a partir do modal
-        document.addEventListener('DOMContentLoaded', function () {
-            var form = document.getElementById('formCurso');
-            if (!form) return;
+﻿/**
+ * Script de gerenciamento de cursos no formulário de cadastro de militares
+ * Permite adicionar, visualizar e remover cursos antes de submeter o formulário principal
+ */
 
-            var nomeInput = document.getElementById('inputNomeCurso');
-            var descInput = document.getElementById('inputDescricao');
-            var cargaInput = document.getElementById('inputCargaHoraria');
-            var dataInput = document.getElementById('inputData');
-            var fileInput = document.getElementById('inputArquivoPdf');
-            var tbody = document.getElementById('tabelaCursosBody');
+// Array para armazenar cursos adicionados
+var cursosAdicionados = [];
 
-            form.addEventListener('submit', function (e) {
-                e.preventDefault();
+document.addEventListener('DOMContentLoaded', function () {
+    var form = document.getElementById('formCurso');
+    if (!form) return;
 
-                if (!form.checkValidity()) {
-                    form.classList.add('was-validated');
-                    return;
-                }
+    var nomeInput = document.getElementById('inputNomeCurso');
+    var descInput = document.getElementById('inputDescricao');
+    var cargaInput = document.getElementById('inputCargaHoraria');
+    var dataInput = document.getElementById('inputData');
+    var fileInput = document.getElementById('inputArquivoPdf');
+    var tbody = document.getElementById('tabelaCursosBody');
 
-                var nome = nomeInput.value.trim();
-                var descricao = descInput.value.trim();
-                var carga = (cargaInput && cargaInput.value) ? cargaInput.value.trim() : '';
-                var data = dataInput.value;
-                var file = (fileInput && fileInput.files && fileInput.files[0]) ? fileInput.files[0] : null;
+    // Adicionar curso ao clicar em "Adicionar Curso" no modal
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
 
-                var tr = document.createElement('tr');
-                [nome, descricao, (carga || ''), formatDate(data)].forEach(function (val) {
-                    var td = document.createElement('td');
-                    td.textContent = val;
-                    td.classList.add('text-center', 'align-middle');
-                    tr.appendChild(td);
-                });
+        var nome = nomeInput.value.trim();
+        var descricao = descInput.value.trim();
+        var carga = (cargaInput && cargaInput.value) ? cargaInput.value.trim() : '';
+        var data = dataInput.value;
+        var file = (fileInput && fileInput.files && fileInput.files[0]) ? fileInput.files[0] : null;
 
-                // Coluna de upload do PDF (apenas nome do arquivo)
-                var tdUpload = document.createElement('td');
-                tdUpload.classList.add('text-center', 'align-middle');
-                var objectUrl = null;
-                if (file) {
-                    objectUrl = URL.createObjectURL(file);
-                    tdUpload.textContent = file.name;
-                } else {
-                    tdUpload.textContent = '';
-                }
-                tr.appendChild(tdUpload);
+        // Armazenar dados do curso em memória
+        var cursoData = {
+            nome: nome,
+            descricao: descricao,
+            carga_horaria: carga,
+            data: data,
+            arquivo: file
+        };
+        cursosAdicionados.push(cursoData);
 
-                // Adicionar coluna de ação com botão de visualizar e deletar
-                var tdAcao = document.createElement('td');
-                tdAcao.classList.add('text-center', 'align-middle');
+        // Criar linha na tabela de preview
+        var tr = document.createElement('tr');
+        [nome, descricao, (carga || ''), formatDate(data)].forEach(function (val) {
+            var td = document.createElement('td');
+            td.textContent = val;
+            td.classList.add('text-center', 'align-middle');
+            tr.appendChild(td);
+        });
 
-                // Botão de visualizar PDF
-                var btnView = document.createElement('button');
-                btnView.type = 'button';
-                btnView.className = 'btn btn-link p-0 me-2';
-                btnView.innerHTML = '<i class="bi bi-eye"></i>';
-                btnView.setAttribute('data-bs-toggle', 'tooltip');
-                btnView.setAttribute('data-bs-title', 'Visualizar PDF');
-                btnView.setAttribute('aria-label', 'Visualizar');
-                btnView.addEventListener('click', function () {
-                    visualizarPdf(objectUrl);
-                    // Destruir tooltip após visualizar
-                    var viewTooltip = bootstrap.Tooltip.getInstance(btnView);
-                    if (viewTooltip) viewTooltip.dispose();
-                });
-                tdAcao.appendChild(btnView);
-                new bootstrap.Tooltip(btnView);
+        // Coluna com nome do arquivo PDF
+        var tdUpload = document.createElement('td');
+        tdUpload.classList.add('text-center', 'align-middle');
+        var objectUrl = null;
+        if (file) {
+            objectUrl = URL.createObjectURL(file);
+            tdUpload.textContent = file.name;
+        } else {
+            tdUpload.textContent = '';
+        }
+        tr.appendChild(tdUpload);
 
-                var btnDelete = document.createElement('button');
-                btnDelete.type = 'button';
-                btnDelete.className = 'btn btn-link text-danger p-0 btn-remover';
-                btnDelete.innerHTML = '<i class="bi bi-trash-fill"></i>';
-                btnDelete.setAttribute('data-bs-toggle', 'tooltip');
-                btnDelete.setAttribute('data-bs-title', 'Deletar este curso');
-                btnDelete.setAttribute('aria-label', 'Deletar');
-                btnDelete.addEventListener('click', function () {
-                    if (objectUrl) {
-                        URL.revokeObjectURL(objectUrl);
-                    }
-                    // Destruir tooltips antes de remover a linha
-                    var viewTooltip = bootstrap.Tooltip.getInstance(btnView);
-                    if (viewTooltip) viewTooltip.dispose();
-                    var deleteTooltip = bootstrap.Tooltip.getInstance(btnDelete);
-                    if (deleteTooltip) deleteTooltip.dispose();
-                    tr.remove();
-                });
-                tdAcao.appendChild(btnDelete);
-                new bootstrap.Tooltip(btnDelete);
+        // Coluna com botões de ação
+        var tdAcao = document.createElement('td');
+        tdAcao.classList.add('text-center', 'align-middle');
 
-                tr.appendChild(tdAcao);
-
-                tbody.appendChild(tr);
-
-                form.reset();
-                form.classList.remove('was-validated');
-
-                var modalEl = document.getElementById('modalCurso');
-                var modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-                modal.hide();
-            });
-
-            function formatDate(iso) {
-                if (!iso) return '';
-                var parts = iso.split('-');
-                if (parts.length !== 3) return iso;
-                return parts[2] + '/' + parts[1] + '/' + parts[0];
+        // Botão para visualizar PDF
+        var btnView = document.createElement('button');
+        btnView.type = 'button';
+        btnView.className = 'btn btn-link p-0 me-2';
+        btnView.innerHTML = '<i class="bi bi-eye"></i>';
+        btnView.addEventListener('click', function () {
+            if (objectUrl) {
+                visualizarPdf(objectUrl);
+            } else {
+                alert('Nenhum arquivo PDF foi anexado para este curso.');
             }
-            });
+        });
+        tdAcao.appendChild(btnView);
 
-    // Funcionalidade: visualizar PDF do curso ao clicar no ícone
-    function visualizarPdf(url) {
-        if (!url) return;
-        window.open(url, '_blank');
+        // Botão para remover curso
+        var btnDelete = document.createElement('button');
+        btnDelete.type = 'button';
+        btnDelete.className = 'btn btn-link text-danger p-0 btn-remover';
+        btnDelete.innerHTML = '<i class="bi bi-trash-fill"></i>';
+        var cursoIndex = cursosAdicionados.length - 1;
+        btnDelete.addEventListener('click', function () {
+            if (objectUrl) {
+                URL.revokeObjectURL(objectUrl);
+            }
+            cursosAdicionados.splice(cursoIndex, 1);
+            tr.remove();
+        });
+        tdAcao.appendChild(btnDelete);
+        tr.appendChild(tdAcao);
+
+        tbody.appendChild(tr);
+
+        // Limpar formulário e fechar modal
+        form.reset();
+        var modalEl = document.getElementById('modalCurso');
+        var modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+        modal.hide();
+    });
+
+    // Converter data de formato ISO para dd/mm/yyyy
+    function formatDate(iso) {
+        if (!iso) return '';
+        var parts = iso.split('-');
+        if (parts.length !== 3) return iso;
+        return parts[2] + '/' + parts[1] + '/' + parts[0];
     }
+
+    // Enviar formulário principal com os cursos agregados
+    var formPrincipal = document.getElementById('cadastroMilitarForm');
+    if (formPrincipal) {
+        formPrincipal.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            var formData = new FormData(formPrincipal);
+
+            // Preparar cursos em formato JSON para envio
+            if (cursosAdicionados.length > 0) {
+                var cursosParaEnvio = [];
+                cursosAdicionados.forEach(function (curso, index) {
+                    var cursoObj = {
+                        nome_curso: curso.nome,
+                        descricao: curso.descricao,
+                        carga_horaria: curso.carga_horaria,
+                        data: curso.data
+                    };
+                    
+                    // Adicionar arquivo PDF se existir
+                    if (curso.arquivo) {
+                        formData.append('cursos_arquivo_' + index, curso.arquivo);
+                        cursoObj.tem_arquivo = true;
+                    }
+                    
+                    cursosParaEnvio.push(cursoObj);
+                });
+                
+                // Serializar como JSON e adicionar ao FormData
+                var jsonString = JSON.stringify(cursosParaEnvio);
+                formData.append('cursos_json', jsonString);
+            }
+
+            // Enviar dados via AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open(formPrincipal.method, formPrincipal.action, true);
+            
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    window.location.href = '../views/cadastro_militares.php?success=1';
+                } else {
+                    alert('Erro ao enviar formulario. Status: ' + xhr.status);
+                }
+            };
+
+            xhr.onerror = function () {
+                alert('Erro de rede ao enviar formulario.');
+            };
+            
+            xhr.send(formData);
+        });
+    }
+});
+
+/**
+ * Abre o PDF em uma nova aba do navegador
+ */
+function visualizarPdf(url) {
+    if (!url) return;
+    window.open(url, '_blank');
+}

@@ -209,6 +209,79 @@ try {
 
     $insertId = $pdo->lastInsertId();
 
+    // Processar e salvar cursos se houver
+    $cursos = [];
+    
+    if (!empty($_POST['cursos_json'])) {
+        // Cursos enviados como JSON (via AJAX)
+        $cursosJson = json_decode($_POST['cursos_json'], true);
+        if (is_array($cursosJson)) {
+            $cursos = $cursosJson;
+        }
+    } elseif (!empty($_POST['cursos']) && is_array($_POST['cursos'])) {
+        // Cursos enviados como array tradicional (fallback)
+        $cursos = $_POST['cursos'];
+    }
+
+    if (!empty($cursos)) {
+        $stmtCurso = $pdo->prepare("
+            INSERT INTO cursos_militares (
+                nome_curso, descricao, carga_horaria, data, 
+                upload_arquivo, id_cadastro_militar
+            ) VALUES (
+                :nome_curso, :descricao, :carga_horaria, :data,
+                :upload_arquivo, :id_cadastro_militar
+            )
+        ");
+
+        foreach ($cursos as $cursoIndex => $curso) {
+            // Processar arquivo do curso se fornecido
+            $cursoPdfArquivo = null;
+            
+            // Verificar se há arquivo para este curso específico
+            $fileKey = 'cursos_arquivo_' . $cursoIndex;
+            if (isset($_FILES[$fileKey]) && $_FILES[$fileKey]['error'] !== UPLOAD_ERR_NO_FILE) {
+                try {
+                    $fileArray = $_FILES[$fileKey];
+                    
+                    if ($fileArray['error'] === UPLOAD_ERR_OK) {
+                        // Validar e salvar arquivo
+                        validatePdfFile($fileArray['tmp_name'], $fileArray['name'], $fileArray['size']);
+                        
+                        $timestamp = date('YmdHis');
+                        $randomStr = bin2hex(random_bytes(8));
+                        $safeFileName = "curso_{$timestamp}_{$randomStr}.pdf";
+                        $uploadPath = UPLOAD_DIR . $safeFileName;
+                        
+                        while (file_exists($uploadPath)) {
+                            $randomStr = bin2hex(random_bytes(8));
+                            $safeFileName = "curso_{$timestamp}_{$randomStr}.pdf";
+                            $uploadPath = UPLOAD_DIR . $safeFileName;
+                        }
+                        
+                        if (move_uploaded_file($fileArray['tmp_name'], $uploadPath)) {
+                            chmod($uploadPath, 0644);
+                            $cursoPdfArquivo = "media/{$safeFileName}";
+                        }
+                    }
+                } catch (Exception $e) {
+                    // Log erro mas continua o processo
+                    error_log("Erro ao processar arquivo do curso: " . $e->getMessage());
+                }
+            }
+
+            // Inserir curso no banco
+            $stmtCurso->execute([
+                ':nome_curso' => trim($curso['nome_curso'] ?? ''),
+                ':descricao' => trim($curso['descricao'] ?? ''),
+                ':carga_horaria' => !empty($curso['carga_horaria']) ? (int)$curso['carga_horaria'] : null,
+                ':data' => $curso['data'] ?? null,
+                ':upload_arquivo' => $cursoPdfArquivo,
+                ':id_cadastro_militar' => $insertId
+            ]);
+        }
+    }
+
     // Redirecionar com sucesso
     header('Location: ../../views/cadastro_militares.php?success=1');
     exit;
