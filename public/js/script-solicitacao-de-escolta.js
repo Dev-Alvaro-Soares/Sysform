@@ -6,6 +6,9 @@ function htmlEscape(text) {
     return div.innerHTML;
 }
 
+// Array em memória para equipe
+const equipeMilitar = [];
+
 // ========== INTERCEPTAR ENVIO DO FORMULÁRIO PRINCIPAL ==========
 document.addEventListener('DOMContentLoaded', () => {
     console.log('[ESCOLTA] Script carregado');
@@ -22,6 +25,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(form);
             const action = form.getAttribute('action');
             console.log('[ESCOLTA] Action:', action);
+
+            // Serializar equipe e anexar ao FormData
+            if (equipeMilitar.length > 0) {
+                const equipeJson = JSON.stringify(equipeMilitar);
+                formData.append('equipe_militar_json', equipeJson);
+                console.log('[ESCOLTA] Equipe adicionada ao FormData:', equipeJson);
+            }
             
             fetch(action, {
                 method: 'POST',
@@ -49,6 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             modal.show();
                             console.log('[ESCOLTA] Modal exibido com sucesso');
                             form.reset();
+                            equipeMilitar.length = 0; // limpar array
+                            const tbody = document.getElementById('tabelaEquipeBody');
+                            if (tbody) tbody.innerHTML = '';
                         } catch (err) {
                             console.error('[ESCOLTA] Erro ao exibir modal:', err);
                             alert('Solicitação enviada com sucesso!');
@@ -174,6 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            equipeMilitar.push({ patente, nome, funcao });
             adicionarLinha({ patente, nome, funcao });
             limparFormulario();
 
@@ -193,6 +207,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const tooltip = bootstrap.Tooltip.getInstance(botao);
                 if (tooltip) {
                     tooltip.dispose();
+                }
+                // remover do array pela posição atual da linha
+                const index = Array.from(tabelaBody.children).indexOf(linha);
+                if (index >= 0) {
+                    equipeMilitar.splice(index, 1);
                 }
                 linha.remove();
             }

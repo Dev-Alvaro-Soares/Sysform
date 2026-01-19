@@ -91,45 +91,6 @@
     <main>
         <form id="solicitacaoForm" method="post" action="../app/Controllers/SolicitacaoEscoltaController.php" novalidate>
 
-            <script>
-                // INTERCEPTAR SUBMIT IMEDIATAMENTE
-                document.addEventListener('DOMContentLoaded', function() {
-                    const form = document.getElementById('solicitacaoForm');
-                    if (form) {
-                        form.addEventListener('submit', function(e) {
-                            console.log('SUBMIT INTERCEPTADO');
-                            e.preventDefault();
-                            e.stopPropagation();
-                            
-                            const formData = new FormData(this);
-                            const action = this.getAttribute('action');
-                            
-                            fetch(action, {
-                                method: 'POST',
-                                body: formData
-                            })
-                            .then(r => r.json())
-                            .then(data => {
-                                console.log('Resposta:', data);
-                                if (data.success) {
-                                    const modal = new bootstrap.Modal(document.getElementById('successModal'));
-                                    modal.show();
-                                    form.reset();
-                                } else {
-                                    alert('Erro: ' + (data.errors ? data.errors[0] : 'Desconhecido'));
-                                }
-                            })
-                            .catch(err => {
-                                console.error('Erro:', err);
-                                alert('Erro ao enviar: ' + err.message);
-                            });
-                            
-                            return false;
-                        }, true);
-                    }
-                });
-            </script>
-
             <!-- 1. Dados do protegido -->
             <section class="section-box p-3 mx-4 my-3">
                 <h2 class="section-title mb-3">1. Dados do protegido</h2>
@@ -300,20 +261,8 @@
             });
         </script>
         
-        <!-- Mostrar modal de instruções ao carregar a página -->
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const modalElement = document.getElementById('modal_01');
-                if (modalElement) {
-                    const modal = new bootstrap.Modal(modalElement);
-                    modal.show();
-                }
-            });
-        </script>
-        
         <script src="../public/js/localidades-ibge.js"></script>
-        <!-- SCRIPT DE ESCOLTA DESABILITADO - usando inline script no formulário -->
-        <!-- <script src="../public/js/script-solicitacao-de-escolta.js"></script> -->
+        <script src="../public/js/script-solicitacao-de-escolta.js"></script>
 
         <!-- Modal de sucesso -->
         <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">

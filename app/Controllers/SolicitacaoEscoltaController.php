@@ -20,6 +20,7 @@ $horario_chegada = trim($_POST['horario_chegada'] ?? '');
 $horario_saida = trim($_POST['horario_saida'] ?? '');
 $descricao_atividades = trim($_POST['descricao_atividades'] ?? '');
 $observacoes = trim($_POST['observacoes'] ?? null);
+$equipe_militar_json = $_POST['equipe_militar_json'] ?? '[]';
 
 $errors = [];
 if ($nome_protegido === '') {
@@ -53,6 +54,14 @@ if (count($errors) > 0) {
     exit;
 }
 
+// Validar JSON da equipe
+$equipe_militar = json_decode($equipe_militar_json, true);
+if ($equipe_militar_json !== '[]' && json_last_error() !== JSON_ERROR_NONE) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'errors' => ['Formato de equipe militar inválido.']]);
+    exit;
+}
+
 $dbHost = '127.0.0.1';
 $dbName = '3mil';
 $dbUser = 'root';
@@ -63,6 +72,8 @@ try {
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
+
+    $pdo->beginTransaction();
 
     $sql = "INSERT INTO registro_escolta (nome_protegido, atividade_missao, localidades, data_inicio_missao, data_final_missao, horario_chegada, horario_saida, descricao_atividades, observacoes)
             VALUES (:nome_protegido, :atividade_missao, :localidades, :data_inicio_missao, :data_final_missao, :horario_chegada, :horario_saida, :descricao_atividades, :observacoes)";
@@ -80,14 +91,42 @@ try {
 
     $stmt->execute();
 
+    $registroId = $pdo->lastInsertId();
+
+    if (is_array($equipe_militar) && count($equipe_militar) > 0) {
+        $sqlEquipe = "INSERT INTO equipe_militar (patente, nome, funcao, id_registro_escolta)
+                      VALUES (:patente, :nome, :funcao, :id_registro_escolta)";
+        $stmtEquipe = $pdo->prepare($sqlEquipe);
+
+        foreach ($equipe_militar as $membro) {
+            $patente = trim($membro['patente'] ?? '');
+            $nome = trim($membro['nome'] ?? '');
+            $funcao = trim($membro['funcao'] ?? '');
+
+            if ($patente === '' || $nome === '' || $funcao === '') {
+                continue; // ignora itens inválidos
+            }
+
+            $stmtEquipe->bindValue(':patente', $patente, PDO::PARAM_STR);
+            $stmtEquipe->bindValue(':nome', $nome, PDO::PARAM_STR);
+            $stmtEquipe->bindValue(':funcao', $funcao, PDO::PARAM_STR);
+            $stmtEquipe->bindValue(':id_registro_escolta', $registroId, PDO::PARAM_INT);
+            $stmtEquipe->execute();
+        }
+    }
+
+    $pdo->commit();
+
     http_response_code(200);
     echo json_encode(['success' => true, 'message' => 'Solicitação enviada com sucesso.']);
     exit;
 
 } catch (PDOException $e) {
+    if (isset($pdo) && $pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
     http_response_code(500);
     echo json_encode(['success' => false, 'errors' => ['Erro ao conectar/inserir no banco: ' . $e->getMessage()]]);
     exit;
 }
-?>
 ?>
