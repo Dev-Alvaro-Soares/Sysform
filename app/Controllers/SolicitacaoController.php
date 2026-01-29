@@ -33,16 +33,21 @@ if (count($errors) > 0) {
     exit;
 }
 
-$dbHost = '127.0.0.1';
-$dbName = '3mil';
-$dbUser = 'root';
-$dbPass = '';
+$dbHost = '192.168.123.32';
+$dbName = 'militar';
+$dbUser = 'militar';
+$dbPass = 'forms3Mil';
+$dbPort = 5432;
+$dbSchema = 'forms_militar';
 
 try {
-    $pdo = new PDO("mysql:host={$dbHost};dbname={$dbName};charset=utf8mb4", $dbUser, $dbPass, [
+    $pdo = new PDO("pgsql:host={$dbHost};port={$dbPort};dbname={$dbName}", $dbUser, $dbPass, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
+
+    // Definir schema
+    $pdo->exec("SET search_path TO {$dbSchema}");
 
     $sql = "INSERT INTO registro_veiculos (modelo, nome, matricula, data_missao, quilometragem_inicial, quilometragem_final, retirada, devolucao, observacao)
             VALUES (:modelo, :nome, :matricula, :data_missao, :qi, :qf, :retirada, :devolucao, :observacao)";

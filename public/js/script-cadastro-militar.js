@@ -111,9 +111,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Enviar formulário principal com os cursos agregados
     var formPrincipal = document.getElementById('cadastroMilitarForm');
+    var formSubmitting = false; // Flag para evitar submissões duplicadas
+    
     if (formPrincipal) {
         formPrincipal.addEventListener('submit', function (e) {
             e.preventDefault();
+
+            // Evitar submissões duplicadas
+            if (formSubmitting) {
+                return;
+            }
+            formSubmitting = true;
+
+            // Desabilitar botão de envio
+            var submitBtn = formPrincipal.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+            }
 
             var formData = new FormData(formPrincipal);
 
@@ -151,11 +165,19 @@ document.addEventListener('DOMContentLoaded', function () {
                     window.location.href = '../views/cadastro_militares.php?success=1';
                 } else {
                     alert('Erro ao enviar formulario. Status: ' + xhr.status);
+                    formSubmitting = false; // Liberar para nova tentativa
+                    if (submitBtn) {
+                        submitBtn.disabled = false; // Reabilitar botão
+                    }
                 }
             };
 
             xhr.onerror = function () {
                 alert('Erro de rede ao enviar formulario.');
+                formSubmitting = false; // Liberar para nova tentativa
+                if (submitBtn) {
+                    submitBtn.disabled = false; // Reabilitar botão
+                }
             };
             
             xhr.send(formData);

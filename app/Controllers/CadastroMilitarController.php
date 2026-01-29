@@ -20,11 +20,18 @@ define('ALLOWED_EXTENSIONS', ['pdf']);
 define('ALLOWED_MIME_TYPES', ['application/pdf', 'application/x-pdf']);
 define('PDF_MAGIC_BYTES', '%PDF'); // Assinatura de arquivo PDF
 
+// Criar diretório de upload se não existir
+if (!is_dir(UPLOAD_DIR)) {
+    mkdir(UPLOAD_DIR, 0755, true);
+}
+
 // Configurações do banco de dados
-$dbHost = '127.0.0.1';
-$dbName = '3mil';
-$dbUser = 'root';
-$dbPass = '';
+$dbHost = '192.168.123.32';
+$dbName = 'militar';
+$dbUser = 'militar';
+$dbPass = 'forms3Mil';
+$dbPort = 5432;
+$dbSchema = 'forms_militar';
 
 /**
  * Valida se um arquivo é realmente um PDF verificando:
@@ -132,10 +139,13 @@ function saveUploadedFile($fileInputName, $purpose = 'documento')
 // Processar dados do formulário
 try {
     // Conectar ao banco de dados
-    $pdo = new PDO("mysql:host={$dbHost};dbname={$dbName};charset=utf8mb4", $dbUser, $dbPass, [
+    $pdo = new PDO("pgsql:host={$dbHost};port={$dbPort};dbname={$dbName}", $dbUser, $dbPass, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
+
+    // Definir schema
+    $pdo->exec("SET search_path TO {$dbSchema}");
 
     // Processar uploads de documentos (se enviados)
     $docMilitarArquivo = null;
@@ -287,10 +297,12 @@ try {
     exit;
 
 } catch (PDOException $e) {
+    http_response_code(500);
     echo '<h3>Erro ao conectar/inserir no banco:</h3>' . htmlspecialchars($e->getMessage());
     echo '<p><a href="../../views/cadastro_militares.php">Voltar</a></p>';
     exit;
 } catch (Exception $e) {
+    http_response_code(500);
     echo '<h3>Erro no processamento:</h3>' . htmlspecialchars($e->getMessage());
     echo '<p><a href="../../views/cadastro_militares.php">Voltar</a></p>';
     exit;
