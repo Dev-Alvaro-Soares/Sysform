@@ -1,4 +1,8 @@
 <?php
+/**
+ * LEGADO: migration mantida apenas para referência.
+ * Não é executada no ambiente atual.
+ */
 
 use Phinx\Migration\AbstractMigration;
 

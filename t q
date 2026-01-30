@@ -1,0 +1,16 @@
+[33m8193c2e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m Implementação em desenvolvimento da funcionalidade de adicionar equipe militar no formulário de solicitação de escolta
+[33maec1012[m Implementação em desenvolvimennto da funcionalidade de adicionar cursos no formulário de cadastro de militares
+[33ma9ad255[m Conexão do formulário solicitacao_escolta.php com a tabela registro_escolta
+[33mb12784c[m Finalização do cadastro de solicitação de escolta
+[33m7a7985f[m Conexão do formulário cadastro militares com banco de dados do projeto
+[33mde81a2d[m Criação de função para tratamento de dados e finalização do formulário de solicitação de veiculos
+[33m0d84f75[m conexão do formulário de registro de veiculos com base de dados
+[33m123dab7[m Criação do modal para instruções em geral para o formulário de escolta
+[33m52f2815[m Início da produção do formulário de solicitação de escolta
+[33mfe4d3b7[m Finalização do formulário de cadastro de militares
+[33m5999da4[m Inicio da produção do formulário de cadastro dos militares e realização de algumas pequenas alterações no cadastro de veiculos
+[33mc6fd7ca[m Ajuste de pequenos erros no formulário de solicitação de veiculos
+[33m20693a2[m Finalização do formulário de solicitação de veículos
+[33m325ca24[m produção do formulário de cadastro de veiculos
+[33m5d20e5b[m Criação do design system e produção do cabeçalho do formulário de cadastro de  veículo
+[33m64c45ea[m Commit inicial

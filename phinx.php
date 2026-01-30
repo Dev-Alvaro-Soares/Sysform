@@ -1,4 +1,7 @@
 <?php
+// LEGADO: configuração do Phinx mantida apenas para referência.
+// O esquema atual do banco foi criado manualmente e as migrations
+// não estão sendo executadas neste projeto no momento.
 return [
     'paths' => [
         'migrations' => 'db/migrations',

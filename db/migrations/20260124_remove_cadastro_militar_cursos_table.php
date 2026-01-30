@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * LEGADO: migration mantida apenas para referência.
+ * Não é executada no ambiente atual.
+ */
+
 declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
