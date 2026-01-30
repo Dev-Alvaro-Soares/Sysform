@@ -276,7 +276,7 @@
                     <div class="modal-body">
                         Sua Solicitação foi enviada.
                         <div id="protocoloInfo" style="display: none;">
-                            Protocolo: <strong id="protocoloNumero"></strong>
+                            Protocolo: <span id="protocoloNumero" class="texto-protocolo"></span>
                         </div>
                     </div>
                     <div class="modal-footer">

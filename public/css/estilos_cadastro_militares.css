@@ -323,3 +323,7 @@ button:hover {
 .btn-enviar i {
     display: inline-block !important;
 }
+
+.texto-protocolo {
+    font-weight: bold;
+}

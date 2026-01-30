@@ -87,12 +87,13 @@
                         <input class="form-control input-line" type="text" name="lotacao" placeholder="Lotação">
                     </div>
 
-                    <div class="col-12 col-md-6">
+                    <div class="col-12">
                         <input class="form-control input-line" type="text" name="doc_militar_numero"
                             placeholder="Nº documento de identificação do militar">
                     </div>
-                    <div class="col-12 col-md-6">
-                        <input class="form-control input-line" type="file" name="doc_militar" accept=".pdf">
+                    <div class="col-12">
+                        <label for="doc_militar" class="form-label">Anexar o documento de identificação do militar</label>
+                        <input class="form-control input-line" type="file" id="doc_militar" name="doc_militar" accept=".pdf">
                     </div>
                 </div>
             </section>
@@ -113,7 +114,8 @@
                             placeholder="Nº documento de identificação civil">
                     </div>
                     <div class="col-12">
-                        <input class="form-control input-line" type="file" name="doc_civil" accept=".pdf">
+                        <label for="doc_civil" class="form-label">Anexar o documento de identificação civil</label>
+                        <input class="form-control input-line" type="file" id="doc_civil" name="doc_civil" accept=".pdf">
                     </div>
                 </div>
             </section>
@@ -388,7 +390,7 @@
                     <div class="modal-body">
                         Cadastro de militar realizado com sucesso.
                         <div id="protocoloInfo" style="display: none;">
-                            Protocolo: <strong id="protocoloNumero"></strong>
+                            Protocolo: <span id="protocoloNumero" class="texto-protocolo"></span>
                         </div>
                     </div>
                     <div class="modal-footer">
