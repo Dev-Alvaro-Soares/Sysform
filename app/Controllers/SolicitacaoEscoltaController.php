@@ -69,6 +69,40 @@ $dbPass = 'forms3Mil';
 $dbPort = 5432;
 $dbSchema = 'forms_militar';
 
+function hasColumn(PDO $pdo, string $schema, string $table, string $column): bool
+{
+    $sql = "SELECT 1 FROM information_schema.columns WHERE table_schema = :schema AND table_name = :table AND column_name = :column";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        ':schema' => $schema,
+        ':table' => $table,
+        ':column' => $column,
+    ]);
+    return (bool) $stmt->fetchColumn();
+}
+
+function generateProtocol(PDO $pdo, string $schema, string $table, string $column): string
+{
+    $year = date('Y');
+    $lockKey = sprintf('%u', crc32("{$schema}.{$table}.{$column}.{$year}"));
+    $pdo->prepare('SELECT pg_advisory_xact_lock(:lock_key)')->execute([':lock_key' => $lockKey]);
+
+    $sql = "SELECT MAX({$column}) AS max_protocolo
+            FROM {$schema}.{$table}
+            WHERE {$column} LIKE :prefix";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':prefix' => $year . '%']);
+    $max = $stmt->fetchColumn();
+
+    $lastSeq = 0;
+    if (is_string($max) && strlen($max) === 10) {
+        $lastSeq = (int) substr($max, 4, 6);
+    }
+
+    $nextSeq = $lastSeq + 1;
+    return $year . str_pad((string) $nextSeq, 6, '0', STR_PAD_LEFT);
+}
+
 try {
     $pdo = new PDO("pgsql:host={$dbHost};port={$dbPort};dbname={$dbName}", $dbUser, $dbPass, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -80,8 +114,17 @@ try {
 
     $pdo->beginTransaction();
 
-    $sql = "INSERT INTO registro_escolta (nome_protegido, atividade_missao, localidades, data_inicio_missao, data_final_missao, horario_chegada, horario_saida, descricao_atividades, observacoes)
-            VALUES (:nome_protegido, :atividade_missao, :localidades, :data_inicio_missao, :data_final_missao, :horario_chegada, :horario_saida, :descricao_atividades, :observacoes)";
+    $hasNumeroProtocolo = hasColumn($pdo, $dbSchema, 'registro_escolta', 'numero_protocolo');
+    $numero_protocolo = $hasNumeroProtocolo ? generateProtocol($pdo, $dbSchema, 'registro_escolta', 'numero_protocolo') : null;
+
+    $columns = "nome_protegido, atividade_missao, localidades, data_inicio_missao, data_final_missao, horario_chegada, horario_saida, descricao_atividades, observacoes";
+    $values = ":nome_protegido, :atividade_missao, :localidades, :data_inicio_missao, :data_final_missao, :horario_chegada, :horario_saida, :descricao_atividades, :observacoes";
+    if ($hasNumeroProtocolo) {
+        $columns .= ", numero_protocolo";
+        $values .= ", :numero_protocolo";
+    }
+
+    $sql = "INSERT INTO registro_escolta ({$columns}) VALUES ({$values})";
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':nome_protegido', $nome_protegido, PDO::PARAM_STR);
@@ -93,6 +136,9 @@ try {
     $stmt->bindValue(':horario_saida', $horario_saida, PDO::PARAM_STR);
     $stmt->bindValue(':descricao_atividades', $descricao_atividades, PDO::PARAM_STR);
     $stmt->bindValue(':observacoes', $observacoes ?: null, PDO::PARAM_STR);
+    if ($hasNumeroProtocolo) {
+        $stmt->bindValue(':numero_protocolo', $numero_protocolo, $numero_protocolo === null ? PDO::PARAM_NULL : PDO::PARAM_STR);
+    }
 
     $stmt->execute();
 
@@ -123,7 +169,11 @@ try {
     $pdo->commit();
 
     http_response_code(200);
-    echo json_encode(['success' => true, 'message' => 'Solicitação enviada com sucesso.']);
+    echo json_encode([
+        'success' => true,
+        'message' => 'Solicitação enviada com sucesso.',
+        'numero_protocolo' => $numero_protocolo,
+    ]);
     exit;
 
 } catch (PDOException $e) {

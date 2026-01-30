@@ -261,6 +261,7 @@
             });
         </script>
         
+        
         <script src="../public/js/localidades-ibge.js"></script>
         <script src="../public/js/script-solicitacao-de-escolta.js"></script>
 
@@ -274,6 +275,9 @@
                     </div>
                     <div class="modal-body">
                         Sua Solicitação foi enviada.
+                        <div id="protocoloInfo" style="display: none;">
+                            Protocolo: <strong id="protocoloNumero"></strong>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>

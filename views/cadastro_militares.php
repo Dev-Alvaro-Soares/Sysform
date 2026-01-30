@@ -387,6 +387,9 @@
                     </div>
                     <div class="modal-body">
                         Cadastro de militar realizado com sucesso.
+                        <div id="protocoloInfo" style="display: none;">
+                            Protocolo: <strong id="protocoloNumero"></strong>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -425,11 +428,19 @@
                 try {
                     const params = new URLSearchParams(window.location.search);
                     if (params.get('success') === '1') {
+                        const protocolo = params.get('protocolo');
+                        const protocoloInfo = document.getElementById('protocoloInfo');
+                        const protocoloEl = document.getElementById('protocoloNumero');
+                        if (protocolo && protocoloInfo && protocoloEl) {
+                            protocoloEl.textContent = protocolo;
+                            protocoloInfo.style.display = 'block';
+                        }
                         const modalEl = document.getElementById('successModal');
                         const modal = new bootstrap.Modal(modalEl);
                         modal.show();
                         // remover param da URL para evitar reaparecer ao recarregar
                         params.delete('success');
+                        params.delete('protocolo');
                         const newUrl = window.location.pathname + (params.toString() ? ('?' + params.toString()) : '');
                         history.replaceState(null, '', newUrl);
                     }

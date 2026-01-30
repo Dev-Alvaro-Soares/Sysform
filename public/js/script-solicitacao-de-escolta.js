@@ -52,6 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     const successModalElement = document.getElementById('successModal');
                     console.log('[ESCOLTA] Modal elemento encontrado:', !!successModalElement);
+                    const protocoloInfo = document.getElementById('protocoloInfo');
+                    const protocoloEl = document.getElementById('protocoloNumero');
+                    if (data.numero_protocolo && protocoloInfo && protocoloEl) {
+                        protocoloEl.textContent = data.numero_protocolo;
+                        protocoloInfo.style.display = 'block';
+                    }
                     
                     if (successModalElement && typeof bootstrap !== 'undefined') {
                         try {

@@ -32,6 +32,42 @@ $dbUser = 'militar';
 $dbPass = 'forms3Mil';
 $dbPort = 5432;
 $dbSchema = 'forms_militar';
+$numero_protocolo = trim($_POST['numero_protocolo'] ?? '');
+$numero_protocolo = $numero_protocolo !== '' ? $numero_protocolo : null;
+
+function hasColumn(PDO $pdo, string $schema, string $table, string $column): bool
+{
+    $sql = "SELECT 1 FROM information_schema.columns WHERE table_schema = :schema AND table_name = :table AND column_name = :column";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        ':schema' => $schema,
+        ':table' => $table,
+        ':column' => $column,
+    ]);
+    return (bool) $stmt->fetchColumn();
+}
+
+function generateProtocol(PDO $pdo, string $schema, string $table, string $column): string
+{
+    $year = date('Y');
+    $lockKey = sprintf('%u', crc32("{$schema}.{$table}.{$column}.{$year}"));
+    $pdo->prepare('SELECT pg_advisory_xact_lock(:lock_key)')->execute([':lock_key' => $lockKey]);
+
+    $sql = "SELECT MAX({$column}) AS max_protocolo
+            FROM {$schema}.{$table}
+            WHERE {$column} LIKE :prefix";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':prefix' => $year . '%']);
+    $max = $stmt->fetchColumn();
+
+    $lastSeq = 0;
+    if (is_string($max) && strlen($max) === 10) {
+        $lastSeq = (int) substr($max, 4, 6);
+    }
+
+    $nextSeq = $lastSeq + 1;
+    return $year . str_pad((string) $nextSeq, 6, '0', STR_PAD_LEFT);
+}
 
 /**
  * Valida se um arquivo é realmente um PDF verificando:
@@ -147,6 +183,8 @@ try {
     // Definir schema
     $pdo->exec("SET search_path TO {$dbSchema}");
 
+    $pdo->beginTransaction();
+
     // Processar uploads de documentos (se enviados)
     $docMilitarArquivo = null;
     $docCivilArquivo = null;
@@ -161,9 +199,10 @@ try {
     }
 
     // Preparar dados para inserção
-    $stmt = $pdo->prepare("
-        INSERT INTO cadastro_militares (
-            nome_militar, nome_guerra, patente, lotacao,
+    $hasNumeroProtocolo = hasColumn($pdo, $dbSchema, 'cadastro_militares', 'numero_protocolo');
+    $numero_protocolo = $hasNumeroProtocolo ? generateProtocol($pdo, $dbSchema, 'cadastro_militares', 'numero_protocolo') : null;
+
+    $columns = "nome_militar, nome_guerra, patente, lotacao,
             doc_militar_numero, doc_militar_arquivo,
             nome_civil, nome_mae,
             doc_civil_numero, doc_civil_arquivo,
@@ -171,9 +210,9 @@ try {
             endereco_funcional, bairro_funcional, cidade_funcional, estado_funcional, cep_funcional,
             qualificacao, indicado_por, telefone, email,
             conjuge, numero_filhos, tipo_sanguineo, vinculo_mp,
-            created_at
-        ) VALUES (
-            :nome_militar, :nome_guerra, :patente, :lotacao,
+            created_at";
+
+    $values = ":nome_militar, :nome_guerra, :patente, :lotacao,
             :doc_militar_numero, :doc_militar_arquivo,
             :nome_civil, :nome_mae,
             :doc_civil_numero, :doc_civil_arquivo,
@@ -181,12 +220,17 @@ try {
             :endereco_funcional, :bairro_funcional, :cidade_funcional, :estado_funcional, :cep_funcional,
             :qualificacao, :indicado_por, :telefone, :email,
             :conjuge, :numero_filhos, :tipo_sanguineo, :vinculo_mp,
-            NOW()
-        )
-    ");
+            NOW()";
+
+    if ($hasNumeroProtocolo) {
+        $columns .= ", numero_protocolo";
+        $values .= ", :numero_protocolo";
+    }
+
+    $stmt = $pdo->prepare("INSERT INTO cadastro_militares ({$columns}) VALUES ({$values})");
 
     // Bind values com sanitização
-    $stmt->execute([
+    $params = [
         ':nome_militar' => trim($_POST['nome_militar'] ?? ''),
         ':nome_guerra' => trim($_POST['nome_guerra'] ?? ''),
         ':patente' => trim($_POST['patente'] ?? ''),
@@ -215,7 +259,13 @@ try {
         ':numero_filhos' => !empty($_POST['numero_filhos']) ? (int)$_POST['numero_filhos'] : null,
         ':tipo_sanguineo' => trim($_POST['tipo_sanguineo'] ?? ''),
         ':vinculo_mp' => trim($_POST['vinculo_mp'] ?? ''),
-    ]);
+    ];
+
+    if ($hasNumeroProtocolo) {
+        $params[':numero_protocolo'] = $numero_protocolo;
+    }
+
+    $stmt->execute($params);
 
     $insertId = $pdo->lastInsertId();
 
@@ -292,16 +342,25 @@ try {
         }
     }
 
+    $pdo->commit();
+
     // Redirecionar com sucesso
-    header('Location: ../../views/cadastro_militares.php?success=1');
+    $protocolParam = $numero_protocolo ? ('&protocolo=' . urlencode($numero_protocolo)) : '';
+    header('Location: ../../views/cadastro_militares.php?success=1' . $protocolParam);
     exit;
 
 } catch (PDOException $e) {
+    if (isset($pdo) && $pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
     http_response_code(500);
     echo '<h3>Erro ao conectar/inserir no banco:</h3>' . htmlspecialchars($e->getMessage());
     echo '<p><a href="../../views/cadastro_militares.php">Voltar</a></p>';
     exit;
 } catch (Exception $e) {
+    if (isset($pdo) && $pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
     http_response_code(500);
     echo '<h3>Erro no processamento:</h3>' . htmlspecialchars($e->getMessage());
     echo '<p><a href="../../views/cadastro_militares.php">Voltar</a></p>';

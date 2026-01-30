@@ -131,6 +131,9 @@
                     </div>
                     <div class="modal-body">
                         Sua Solicitação foi enviada.
+                        <div id="protocoloInfo" style="display: none;">
+                            Protocolo: <strong id="protocoloNumero"></strong>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -161,11 +164,19 @@
                 try {
                     const params = new URLSearchParams(window.location.search);
                     if (params.get('success') === '1') {
+                        const protocolo = params.get('protocolo');
+                        const protocoloInfo = document.getElementById('protocoloInfo');
+                        const protocoloEl = document.getElementById('protocoloNumero');
+                        if (protocolo && protocoloInfo && protocoloEl) {
+                            protocoloEl.textContent = protocolo;
+                            protocoloInfo.style.display = 'block';
+                        }
                         const modalEl = document.getElementById('successModal');
                         const modal = new bootstrap.Modal(modalEl);
                         modal.show();
                         // remover param da URL para evitar reaparecer ao recarregar
                         params.delete('success');
+                        params.delete('protocolo');
                         const newUrl = window.location.pathname + (params.toString() ? ('?' + params.toString()) : '');
                         history.replaceState(null, '', newUrl);
                     }
@@ -181,12 +192,3 @@
 
 
 
-
-<!-- 
-
-Comentários no código (Ajustes)
-
--> Ao reduzir o tamanho da tela, notei que todos os campos estão mantendo uma consistência de estender para ocupar o espaço dispónivel, porém apenas o campo select (modelo) não está se comportando da mesma forma. Sugiro ajustar o CSS para que ele também se comporte como os outros campos, ocupando o espaço disponível de forma proporcional.
--> Ao reduzir o espaço horizontal, notei que o layout dos campos está se quebrando o placeholder vai sumindo ao inves de apenas se reduzir proporcionalmente. Sugiro ajustar o CSS para que os campos mantenham uma largura mínima, evitando que o texto do placeholder desapareça.
-
--->
