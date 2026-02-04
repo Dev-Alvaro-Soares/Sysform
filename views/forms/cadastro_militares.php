@@ -92,7 +92,7 @@
                             placeholder="Nº documento de identificação do militar">
                     </div>
                     <div class="col-12">
-                        <label for="doc_militar" class="form-label">Anexar o documento de identificação do militar</label>
+                        <label for="doc_militar" class="form-label label-position">Anexar o documento de identificação do militar</label>
                         <input class="form-control input-line" type="file" id="doc_militar" name="doc_militar" accept=".pdf">
                     </div>
                 </div>
@@ -114,7 +114,7 @@
                             placeholder="Nº documento de identificação civil">
                     </div>
                     <div class="col-12">
-                        <label for="doc_civil" class="form-label">Anexar o documento de identificação civil</label>
+                        <label for="doc_civil" class="form-label label-position">Anexar o documento de identificação civil</label>
                         <input class="form-control input-line" type="file" id="doc_civil" name="doc_civil" accept=".pdf">
                     </div>
                 </div>

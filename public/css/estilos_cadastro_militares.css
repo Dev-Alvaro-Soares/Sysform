@@ -327,3 +327,7 @@ button:hover {
 .texto-protocolo {
     font-weight: bold;
 }
+
+.label-position {
+    margin-left: 3px;
+}
