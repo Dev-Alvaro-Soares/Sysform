@@ -2,9 +2,9 @@
 declare(strict_types=1);
 
 $views = [
-	'cadastro_militares' => __DIR__ . '/../views/cadastro_militares.php',
-	'solicitacao_escolta' => __DIR__ . '/../views/solicitacao_escolta.php',
-	'solicitacao_veiculos' => __DIR__ . '/../views/solicitacao_veiculos.php',
+	'cadastro_militares' => __DIR__ . '/../views/forms/cadastro_militares.php',
+	'solicitacao_escolta' => __DIR__ . '/../views/forms/solicitacao_escolta.php',
+	'solicitacao_veiculos' => __DIR__ . '/../views/forms/solicitacao_veiculos.php',
 ];
 
 $page = $_GET['page'] ?? 'home';

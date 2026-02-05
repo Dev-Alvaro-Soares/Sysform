@@ -1,0 +1,45 @@
+/* Variáveis CSS */
+:root {
+    --cor-primaria: #1e325c;
+    --cor-titulo: #FFFFFF;
+    --cor-fundo: #FFFFFF;
+    --espacamento-padrao-horizontal: 20px;
+    --fonte-titulo-tamanho: 2rem;
+}
+
+/* Cabeçalho */
+
+/* Definição de uma cor de fundo */
+body {
+    background-color: var(--cor-fundo);
+}
+
+/* Estilização do cabeçalho */
+header {
+    width: 100%;
+}
+
+div.header_container {
+    background-color: var(--cor-primaria);
+    height: 160px;
+    padding: var(--espacamento-padrao-horizontal);
+}
+
+/* Estilização do título no cabeçalho */
+div.header_container>h1 {
+    color: var(--cor-titulo);
+    font-size: var(--fonte-titulo-tamanho);
+}
+
+/* Logos no cabeçalho */
+.logo-mppa {
+    width: auto;
+    height: 60px;
+    flex-shrink: 0;
+}
+
+.logo-gsi {
+    height: 70px;
+    width: auto;
+    flex-shrink: 0;
+}
