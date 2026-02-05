@@ -7,11 +7,30 @@
     <!-- Favicon -->
     <link rel="icon" href="../../public/img/faviconMPPA.png" type="image/x-icon" />
     <link rel="stylesheet" href="../../public/css/estilos_gerenciador_registro.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-          crossorigin="anonymous">
+    <link rel="stylesheet" href="../../public/vendor/bootstrap/css/bootstrap.min.css">
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+    <style>
+        /* Estilização customizada das abas */
+        .nav-tabs .nav-link {
+            color: #495057;
+            border: 2px solid transparent;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .nav-tabs .nav-link:hover {
+            border-color: #e9ecef #e9ecef #dee2e6;
+            color: #1e325c;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: #1e325c;
+            font-weight: bold;
+            background-color: #fff;
+            border-color: #1e325c #1e325c #fff;
+            border-bottom: 2px solid #fff;
+        }
+    </style>
 </head>
 <body>
 
@@ -26,40 +45,123 @@
         </div>
     </header>
     
+    <!-- Navegação por Abas -->
+    <div class="container mt-4">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="veiculos-tab" data-bs-toggle="tab" href="#veiculos" role="tab" aria-controls="veiculos" aria-selected="true">
+                    Solicitação Veículos
+                </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="militares-tab" data-bs-toggle="tab" href="#militares" role="tab" aria-controls="militares" aria-selected="false">
+                    Cadastro Militares
+                </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="escolta-tab" data-bs-toggle="tab" href="#escolta" role="tab" aria-controls="escolta" aria-selected="false">
+                    Solicitação Escolta
+                </a>
+            </li>
+        </ul>
+    </div>
+    
     <!-- Exemplo de Tabela para DataTables -->
     <main class="container mt-4">
-        <table id="minhaTabela" class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Ação</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Seus dados aqui -->
-            </tbody>
-        </table>
+        <!-- Conteúdo das Abas -->
+        <div class="tab-content" id="myTabContent">
+            <!-- Aba Solicitação Veículos -->
+            <div class="tab-pane fade show active" id="veiculos" role="tabpanel" aria-labelledby="veiculos-tab">
+                <h3 class="mb-3">Solicitação de Veículos</h3>
+                <table id="tabelaVeiculos" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nº do protocolo</th>
+                            <th>Data do protocolo</th>
+                            <th>Nome solicitante</th>
+                            <th>Modelo do veículo</th>
+                            <th>Data da missão</th>     
+                            <th>Ações</th>     
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Seus dados aqui -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Aba Cadastro Militares -->
+            <div class="tab-pane fade" id="militares" role="tabpanel" aria-labelledby="militares-tab">
+                <h3 class="mb-3">Cadastro de Militares</h3>
+                <table id="tabelaMilitares" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nº do protocolo</th>
+                            <th>Data do protocolo</th>
+                            <th>Nome Militar</th>
+                            <th>Patente</th>
+                            <th>Lotação</th>
+                            <th>Telefone</th>
+                            <th>Email</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Seus dados aqui -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Aba Solicitação Escolta -->
+            <div class="tab-pane fade" id="escolta" role="tabpanel" aria-labelledby="escolta-tab">
+                <h3 class="mb-3">Solicitação de Escolta</h3>
+                <table id="tabelaEscolta" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nº de protocolo</th>
+                            <th>Data do protocolo</th>
+                            <th>Nome do protegido</th>
+                            <th>Atividade realizada</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Seus dados aqui -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </main>
     
     <!-- jQuery (dependência do DataTables) -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-            crossorigin="anonymous"></script>
+    <script src="../../public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <!-- Inicializar DataTables -->
     <script>
         $(document).ready(function() {
-            $('#minhaTabela').DataTable({
+            // Inicializar DataTables para cada tabela
+            $('#tabelaVeiculos').DataTable({
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json'
                 }
             });
+            
+            $('#tabelaMilitares').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json'
+                }
+            });
+            
+            $('#tabelaEscolta').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json'
+                }
+            });
+
         });
     </script>
 </body>
