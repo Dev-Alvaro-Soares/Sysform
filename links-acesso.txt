@@ -1,0 +1,15 @@
+* Cadastro militares
+
+http://localhost:8000/index.php?page=cadastro_militares
+
+* Solicitação escolta
+
+http://localhost:8000/index.php?page=solicitacao_escolta
+
+* Solicitação veículos
+
+http://localhost:8000/index.php?page=solicitacao_veiculos
+
+* Gerenciador de arquivos 
+
+http://localhost:8000/index.php?page=gerenciador_arquivos

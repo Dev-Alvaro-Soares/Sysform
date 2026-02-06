@@ -16,6 +16,7 @@
             color: #495057;
             border: 2px solid transparent;
             border-bottom: 2px solid #dee2e6;
+            margin-top: 2rem;
         }
         
         .nav-tabs .nav-link:hover {
@@ -29,6 +30,64 @@
             background-color: #fff;
             border-color: #1e325c #1e325c #fff;
             border-bottom: 2px solid #fff;
+        }
+        
+        /* Centralizar conteúdo das tabelas */
+        .table thead th {
+            text-align: center !important;
+            vertical-align: middle !important;
+            padding: 0.75rem !important;
+        }
+        
+        .table tbody td {
+            text-align: center !important;
+            vertical-align: middle !important;
+            padding: 0.75rem !important;
+        }
+        
+        /* Adicionar margem inferior nas tabelas */
+        .table {
+            margin-bottom: 1rem;
+            margin-top: 1rem;
+        }
+        
+        /* Espaçamento entre header e abas */
+        header + .container {
+            margin-top: 1rem !important;
+        }
+        
+        /* Estilização dos botões de ação */
+        .btn-edit {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-edit:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+            color: white;
+        }
+        
+        /* Espaçamento entre botões */
+        table tbody td:last-child .btn {
+            margin: 0 0.25rem;
+        }
+        
+        /* Evitar quebra de linha na coluna de ações */
+        table tbody td:last-child {
+            white-space: nowrap;
+            min-width: 230px;
+        }
+        
+        /* Garantir que os botões não quebrem linha */
+        table tbody td:last-child {
+            display: table-cell;
+        }
+
+        /* Espaço extra abaixo da tabela de veículos */
+        #veiculos {
+            padding-bottom: 3rem;
         }
     </style>
 </head>
@@ -143,26 +202,15 @@
     <!-- Inicializar DataTables -->
     <script>
         $(document).ready(function() {
-            // Inicializar DataTables para cada tabela
-            $('#tabelaVeiculos').DataTable({
-                language: {
-                    url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json'
-                }
-            });
-            
-            $('#tabelaMilitares').DataTable({
-                language: {
-                    url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json'
-                }
-            });
-            
-            $('#tabelaEscolta').DataTable({
-                language: {
-                    url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json'
-                }
-            });
-
+            // DataTables de veiculos, militares e escolta sera inicializado depois de carregar os dados
+            // Ver gerenciador-veiculos.js, gerenciador-militares.js e gerenciador-escolta.js
         });
     </script>
+    <!-- Script para gerenciar dados de veículos -->
+    <script src="../../public/js/gerenciador-veiculos.js"></script>
+    <!-- Script para gerenciar dados de militares -->
+    <script src="../../public/js/gerenciador-militares.js"></script>
+    <!-- Script para gerenciar dados de escolta -->
+    <script src="../../public/js/gerenciador-escolta.js"></script>
 </body>
 </html>
